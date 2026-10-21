@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bang-tinh-quan-nho.pages.dev/sitemap.xml

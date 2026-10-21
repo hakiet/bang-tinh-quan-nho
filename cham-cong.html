@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chấm giờ ca và tiền công mỗi ca — Bảng tính cho quán nhỏ</title>
+<meta name="description" content="Nhập giờ vào, giờ ra, mức công mỗi giờ để ra tiền công, doanh thu mỗi giờ công và tiền lương trên doanh thu. Không đăng ký, không lưu dữ liệu.">
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#5b6470;--line:#e3e6ea;--acc:#0a6c4d;--acc2:#e8f4ef;--warn:#a3410f}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--fg);background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:1.5rem;line-height:1.3;margin:0 0 6px}
+h2{font-size:1.1rem;margin:28px 0 10px}
+p{margin:8px 0}
+.lead{color:var(--mut);margin:0 0 20px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;background:#fff}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.92rem}
+.hint{font-weight:400;color:var(--mut);font-size:.84rem;margin-left:6px}
+input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;background:#fff;color:var(--fg);font-family:inherit}
+input:focus{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>div{flex:1 1 140px;min-width:120px}
+.out{border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:16px;background:var(--acc2)}
+.big{font-size:1.6rem;font-weight:700;color:var(--acc);margin:2px 0}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #fff}
+.kv:last-child{border-bottom:0}
+.kv b{font-variant-numeric:tabular-nums}
+.bad{color:var(--warn)}
+.good{color:var(--acc)}
+.note{font-size:.86rem;color:var(--mut);margin-top:10px}
+a{color:var(--acc)}
+nav a{margin-right:14px}
+button{font:inherit;padding:11px 16px;border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:8px;cursor:pointer}
+button.ghost{background:#fff;color:var(--acc)}
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px}
+th,td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}
+th{font-size:.82rem;color:var(--mut);font-weight:600}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+@media (prefers-color-scheme:dark){
+:root{--bg:#14171a;--fg:#eceff2;--mut:#9aa4ae;--line:#2b3138;--acc:#3fbf8f;--acc2:#1b2622;--warn:#ff9a6b}
+.card,input{background:#1a1e22}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Chấm giờ ca và tiền công mỗi ca — Bảng tính cho quán nhỏ">
+<meta property="og:description" content="Nhập giờ vào, giờ ra, mức công mỗi giờ để ra tiền công, doanh thu mỗi giờ công và tiền lương trên doanh thu. Không đăng ký, không lưu dữ liệu.">
+<meta property="og:image" content="https://www.biz-vn.com/images/og/tai-lieu.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://bang-tinh-quan-nho.pages.dev/cham-cong">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bảng tính cho quán nhỏ">
+<meta name="twitter:image:alt" content="Bảng tính cho quán nhỏ">
+</head>
+<body>
+<div class="wrap">
+<nav><a href="./">Trang chủ</a> <a href="https://www.biz-vn.com/tai-lieu/">Tài liệu gốc</a></nav>
+
+<h1>Chấm giờ ca và tiền công mỗi ca</h1>
+<p class="lead">Nhập giờ vào, giờ ra và mức công mỗi giờ. Ra tiền công, doanh thu trên mỗi giờ công, và tiền lương chiếm bao nhiêu phần trăm doanh thu.</p>
+
+<div class="card">
+  <div class="row">
+    <div>
+      <label for="ca">Tên ca <span class="hint">sáng, trưa, tối</span></label>
+      <input id="ca" type="text" placeholder="Ví dụ: Sáng" autocomplete="off">
+    </div>
+    <div>
+      <label for="mucCong">Công mỗi giờ (đ)</label>
+      <input id="mucCong" type="text" inputmode="decimal" placeholder="25000">
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label for="vao">Giờ vào</label>
+      <input id="vao" type="time" value="07:00">
+    </div>
+    <div>
+      <label for="ra">Giờ ra</label>
+      <input id="ra" type="time" value="11:00">
+    </div>
+    <div>
+      <label for="nghi">Nghỉ giữa ca (phút)</label>
+      <input id="nghi" type="text" inputmode="numeric" placeholder="0">
+    </div>
+  </div>
+
+  <label for="doanhThu">Doanh thu của ca (đ) <span class="hint">điền sau khi hết ca cũng được</span></label>
+  <input id="doanhThu" type="text" inputmode="decimal" placeholder="Ví dụ: 2.450.000">
+
+  <p style="margin-top:16px"><button type="button" id="tinh">Tính ca này</button> <button type="button" class="ghost" id="xoa">Xoá</button></p>
+  <p class="note">Ca qua nửa đêm vẫn tính được: nhập giờ vào 22:00, giờ ra 02:00.</p>
+</div>
+
+<div id="ketQua" hidden>
+  <div class="out">
+    <div class="kv"><span>Tổng giờ làm</span><b class="big" id="oGio">—</b></div>
+    <div class="kv"><span>Tiền công</span><b id="oTienCong">—</b></div>
+    <div class="kv"><span>Doanh thu trên 1 giờ công</span><b id="oTrenGio">—</b></div>
+    <div class="kv"><span>Tiền lương trên doanh thu</span><b id="oTyLe">—</b></div>
+  </div>
+  <p class="note" id="oLuuY"></p>
+  <p style="margin-top:10px"><button type="button" class="ghost" id="luu">Thêm vào bảng so sánh</button> <button type="button" class="ghost" id="xoaBang">Xoá bảng</button></p>
+  <table id="bang" hidden>
+    <thead><tr><th>Ca</th><th class="n">Giờ</th><th class="n">Tiền công</th><th class="n">Doanh thu</th><th class="n">Doanh thu/giờ</th><th class="n">Lương/doanh thu</th></tr></thead>
+    <tbody id="bangBody"></tbody>
+  </table>
+</div>
+
+<h2>Đọc bảng thế nào</h2>
+<p>So tiền lương với doanh thu của từng ca, không so mỗi ca một mình. Ca có doanh
+thu thấp mà vẫn xếp đủ người thì tỷ lệ này vọt lên, đó là ca đang ăn vào lãi.
+Ca doanh thu cao mà tỷ lệ thấp thì xếp thêm người vẫn đáng.</p>
+<p class="note">Bảng này để so sánh tương đối giữa các ca trong cùng quán. Đừng
+lấy tỷ lệ của quán khác ra so: món khác, mặt bằng khác, tệp khách khác.</p>
+
+<p><a href="gia-von.html">← Tính giá vốn món</a> · <a href="bien-nhan-giat.html">Biên nhận giặt →</a></p>
+</div>
+
+<script src="calc.js"></script>
+<script>
+var T = TinhSao;
+var ds = [];
+function money(n){return T.money(n)}
+
+function tinhCa(){
+  var r = T.caLam({
+    vao: document.getElementById('vao').value,
+    ra: document.getElementById('ra').value,
+    nghi: document.getElementById('nghi').value,
+    mucCong: document.getElementById('mucCong').value,
+    doanhThu: document.getElementById('doanhThu').value
+  });
+  var mucCong=T.num(document.getElementById('mucCong').value);
+  var kq=document.getElementById('ketQua');
+  var set=function(id,v,cls){var e=document.getElementById(id);e.textContent=v;if(cls!==undefined)e.className=cls;};
+  if(!r){
+    kq.hidden=false;
+    set('oGio','—');set('oTienCong','—');set('oTrenGio','—');set('oTyLe','—');
+    document.getElementById('oLuuY').innerHTML='<b class="bad">Thiếu giờ vào, giờ ra, hoặc số phút nghỉ nhiều hơn số phút làm.</b>';
+    return null;
+  }
+  set('oGio',r.gio.toLocaleString('vi-VN',{maximumFractionDigits:2})+' giờ ('+r.phut+' phút)');
+  set('oTienCong',mucCong>0?money(r.tien):'—');
+  set('oTrenGio',r.doanhThu>0?money(r.trenGio):'—');
+  set('oTyLe',r.doanhThu>0?T.pct(r.tyLe):'—',r.doanhThu>0?(r.tyLe>30?'bad':'good'):'');
+
+  var luy='';
+  if(mucCong<=0){
+    luy='Chưa nhập công mỗi giờ nên chưa tính được tiền công.';
+  }else if(r.doanhThu<=0){
+    luy='Đã có '+r.gio.toLocaleString('vi-VN',{maximumFractionDigits:2})+' giờ làm, tiền công '+money(r.tien)+'. Nhập doanh thu của ca để so sánh.';
+  }else if(r.tyLe>30){
+    luy='<b class="bad">Ca này tiền lương ăn trên 30% doanh thu.</b> Xem lại: có cần đủ người suốt ca không, hay giờ đầu và giờ cuối chỉ cần một người.';
+  }else{
+    luy='Ca này tỷ lệ lương trên doanh thu ở mức chấp nhận được. Ghi con số này lại để so với tuần sau.';
+  }
+  document.getElementById('oLuuY').innerHTML=luy;
+  kq.hidden=false;
+  return {ten:document.getElementById('ca').value||'Ca',gio:r.gio,tien:r.tien,doanhThu:r.doanhThu};
+}
+
+document.getElementById('tinh').addEventListener('click',tinhCa);
+
+document.getElementById('luu').addEventListener('click',function(){
+  var r=tinhCa(); if(!r) return;
+  ds.push(r); veBang();
+});
+
+document.getElementById('xoaBang').addEventListener('click',function(){
+  ds=[]; veBang();
+});
+
+function veBang(){
+  var tb=document.getElementById('bangBody');
+  tb.innerHTML='';
+  ds.forEach(function(r){
+    var tr=document.createElement('tr');
+    var cells=[
+      r.ten,
+      r.gio.toLocaleString('vi-VN',{maximumFractionDigits:2}),
+      Math.round(r.tien).toLocaleString('vi-VN'),
+      Math.round(r.doanhThu).toLocaleString('vi-VN'),
+      r.gio>0&&r.doanhThu>0?Math.round(r.doanhThu/r.gio).toLocaleString('vi-VN'):'—',
+      r.doanhThu>0?(r.tien/r.doanhThu*100).toLocaleString('vi-VN',{maximumFractionDigits:1})+'%':'—'
+    ];
+    cells.forEach(function(v,i){
+      var td=document.createElement('td');
+      td.textContent=v;
+      if(i>0) td.className='n';
+      tr.appendChild(td);
+    });
+    tb.appendChild(tr);
+  });
+  document.getElementById('bang').hidden = ds.length===0;
+}
+
+document.getElementById('xoa').addEventListener('click',function(){
+  document.getElementById('ca').value='';
+  document.getElementById('mucCong').value='';
+  document.getElementById('doanhThu').value='';
+  document.getElementById('nghi').value='';
+  document.getElementById('vao').value='07:00';
+  document.getElementById('ra').value='11:00';
+  document.getElementById('ketQua').hidden=true;
+});
+</script>
+</body>
+</html>

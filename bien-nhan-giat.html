@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mẫu biên nhận giặt — in và chép vào sổ</title>
+<meta name="description" content="Mẫu biên nhận giặt điền tay, in ra hoặc chép vào sổ. Ghi mã đơn, số món, số kg, loại giặt, ngày hẹn trả. Không đăng ký.">
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#5b6470;--line:#e3e6ea;--acc:#0a6c4d;--acc2:#e8f4ef}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--fg);background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:1.5rem;line-height:1.3;margin:0 0 6px}
+h2{font-size:1.1rem;margin:28px 0 10px}
+p{margin:8px 0}
+.lead{color:var(--mut);margin:0 0 20px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;background:#fff}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.92rem}
+.hint{font-weight:400;color:var(--mut);font-size:.84rem;margin-left:6px}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;background:#fff;color:var(--fg);font-family:inherit}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>div{flex:1 1 140px;min-width:120px}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:8px;font-size:.92rem;text-align:left}
+th{background:var(--acc2);font-weight:600}
+td.n input{text-align:right}
+.note{font-size:.86rem;color:var(--mut);margin-top:10px}
+a{color:var(--acc)}
+nav a{margin-right:14px}
+button{font:inherit;padding:11px 16px;border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:8px;cursor:pointer}
+button.ghost{background:#fff;color:var(--acc)}
+.receipt{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;margin-top:14px}
+.r-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px}
+.r-head h2{margin:0;font-size:1.05rem}
+.r-meta{font-size:.9rem;color:var(--mut)}
+.r-grid{display:flex;gap:20px;flex-wrap:wrap;margin:12px 0;font-size:.95rem}
+.r-grid div{min-width:180px}
+.r-grid b{display:block;font-weight:600}
+.r-grid span{color:var(--mut);font-size:.85rem}
+.sign{margin-top:26px;display:flex;justify-content:space-between;gap:20px;font-size:.9rem}
+.sign div{text-align:center}
+@media print{
+  .no-print,nav,button{display:none!important}
+  body{background:#fff}
+  .wrap{max-width:none;padding:0}
+  .receipt{border:0;padding:0}
+}
+@media (prefers-color-scheme:dark){
+:root{--bg:#14171a;--fg:#eceff2;--mut:#9aa4ae;--line:#2b3138;--acc:#3fbf8f;--acc2:#1b2622}
+.card,input,select,textarea,.receipt{background:#1a1e22}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mẫu biên nhận giặt — in và chép vào sổ">
+<meta property="og:description" content="Mẫu biên nhận giặt điền tay, in ra hoặc chép vào sổ. Ghi mã đơn, số món, số kg, loại giặt, ngày hẹn trả. Không đăng ký.">
+<meta property="og:image" content="https://www.biz-vn.com/images/og/tai-lieu.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://bang-tinh-quan-nho.pages.dev/bien-nhan-giat">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bảng tính cho quán nhỏ">
+<meta name="twitter:image:alt" content="Bảng tính cho quán nhỏ">
+</head>
+<body>
+<div class="wrap">
+<nav class="no-print"><a href="./">Trang chủ</a> <a href="https://www.biz-vn.com/tai-lieu/">Tài liệu gốc</a></nav>
+
+<h1>Mẫu biên nhận giặt</h1>
+<p class="lead">Điền tay rồi in ra, hoặc chép vào sổ. Ghi đủ mã đơn, số món, số kg, loại giặt, ngày hẹn trả, và ghi chú đồ đặc biệt.</p>
+
+<div class="card no-print">
+  <div class="row">
+    <div>
+      <label for="maDon">Mã đơn</label>
+      <input id="maDon" type="text" placeholder="Ví dụ: G-2026-001" autocomplete="off">
+    </div>
+    <div>
+      <label for="tenKhach">Tên khách</label>
+      <input id="tenKhach" type="text" autocomplete="off">
+    </div>
+    <div>
+      <label for="sdt">Số điện thoại</label>
+      <input id="sdt" type="tel" inputmode="tel" autocomplete="off">
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label for="ngayNhan">Ngày nhận</label>
+      <input id="ngayNhan" type="date">
+    </div>
+    <div>
+      <label for="ngayHen">Ngày hẹn trả</label>
+      <input id="ngayHen" type="date">
+    </div>
+    <div>
+      <label for="loaiGiat">Loại giặt</label>
+      <select id="loaiGiat">
+        <option>Giặt lụa</option>
+        <option>Giặt bông</option>
+        <option>Giặt chăn ga</option>
+        <option>Giặt giày dép</option>
+        <option>Giặt sofa</option>
+        <option>Chăm sóc da</option>
+        <option>Khác</option>
+      </select>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th style="width:34%">Loại món</th><th style="width:16%">Số món</th><th style="width:16%">Số kg</th><th style="width:34%">Ghi chú đồ đặc biệt</th></tr></thead>
+    <tbody id="dsMon"></tbody>
+  </table>
+  <p><button type="button" class="ghost" id="themMon">Thêm dòng món</button></p>
+
+  <label for="ghiChu">Ghi chú chung của đơn</label>
+  <textarea id="ghiChu" rows="3" placeholder="Ví dụ: áo khoác có nút tháo, giặt riêng tay áo, khách yêu cầu gấp"></textarea>
+
+  <p style="margin-top:16px"><button type="button" id="xem">Xem biên nhận</button> <button type="button" class="ghost" id="in">In biên nhận</button> <button type="button" class="ghost" id="reset">Làm lại</button></p>
+</div>
+
+<div class="receipt" id="biemNhan">
+  <div class="r-head">
+    <h2>BIÊN NHẬN GIẶT</h2>
+    <div class="r-meta" id="rMaDon"></div>
+  </div>
+  <div class="r-grid">
+    <div><span>Khách</span><b id="rKhach">—</b></div>
+    <div><span>Số điện thoại</span><b id="rSdt">—</b></div>
+    <div><span>Loại giặt</span><b id="rLoai">—</b></div>
+  </div>
+  <div class="r-grid">
+    <div><span>Ngày nhận</span><b id="rNhan">—</b></div>
+    <div><span>Ngày hẹn trả</span><b id="rHen">—</b></div>
+    <div><span>Tổng số món</span><b id="rTongMon">—</b></div>
+    <div><span>Tổng số kg</span><b id="rTongKg">—</b></div>
+  </div>
+  <table>
+    <thead><tr><th>Loại món</th><th class="n">Số món</th><th class="n">Số kg</th><th>Ghi chú</th></tr></thead>
+    <tbody id="rBangMon"></tbody>
+  </table>
+  <p id="rGhiChu" class="note"></p>
+  <div class="sign">
+    <div>Người nhận<br><br><br><span class="r-meta">Ký tên</span></div>
+    <div>Người giao<br><br><br><span class="r-meta">Ký tên</span></div>
+  </div>
+</div>
+
+<h2 class="no-print">Dùng mẫu này thế nào</h2>
+<p class="no-print">Khách quen hay hỏi lại mình gửi bao nhiêu cái, loại gì, hẹn ngày nào.
+Có biên nhận thì tra ra được ngay, không phải đoán. Ngày hẹn trả ghi rõ từ
+đầu thì tranh chấp về thời gian cũng ít đi.</p>
+<p class="note no-print">Đồ có giá trị lớn hoặc khó giặt nên ghi rõ trong cột ghi
+chú. Áo khoác nút tháo, chăn lông, giày da sơn, quần áo dễ phai màu: ghi vào đây
+để bên giặt biết mà xử lý đúng cách.</p>
+
+<p class="no-print"><a href="cham-cong.html">← Chấm giờ ca</a> · <a href="gia-von.html">Tính giá vốn món →</a> · <a href="./">Trang chủ</a></p>
+</div>
+
+<script>
+function themDong(){
+  var tb=document.getElementById('dsMon');
+  var tr=document.createElement('tr');
+  var cols=['Loại món','Số món','Số kg','Ghi chú'];
+  cols.forEach(function(c,i){
+    var td=document.createElement('td');
+    if(i>0) td.className='n';
+    var ip=document.createElement('input');
+    ip.type = i===1||i===2 ? 'number' : 'text';
+    if(i===1||i===2) ip.inputMode='numeric';
+    if(i===1||i===2) ip.min='0';
+    ip.setAttribute('data-col', c);
+    td.appendChild(ip);
+    tr.appendChild(td);
+  });
+  tb.appendChild(tr);
+}
+themDong();
+document.getElementById('themMon').addEventListener('click',themDong);
+
+function fmtDate(v){
+  if(!v) return '—';
+  var p=v.split('-');
+  return p[2]+'/'+p[1]+'/'+p[0];
+}
+function val(id){return document.getElementById(id).value.trim()}
+
+function xem(){
+  var tb=document.getElementById('rBangMon');
+  tb.innerHTML='';
+  var tongMon=0,tongKg=0;
+  Array.prototype.forEach.call(document.querySelectorAll('#dsMon tr'),function(tr){
+    var ins=tr.querySelectorAll('input');
+    var loai=ins[0].value.trim();
+    var mon=parseFloat(ins[1].value)||0;
+    var kg=parseFloat(ins[2].value)||0;
+    var ghi=ins[3].value.trim();
+    if(!loai&&!mon&&!kg&&!ghi) return;
+    tongMon+=mon; tongKg+=kg;
+    var tr2=document.createElement('tr');
+    [loai||'—', mon||'—', ky||'—', ghi||'—'].forEach(function(v,i){
+      var td=document.createElement('td');
+      td.textContent=v;
+      if(i===1||i===2) td.className='n';
+      tr2.appendChild(td);
+    });
+    tb.appendChild(tr2);
+  });
+  document.getElementById('rMaDon').textContent = val('maDon') ? 'Mã đơn: '+val('maDon') : '';
+  document.getElementById('rKhach').textContent = val('tenKhach')||'—';
+  document.getElementById('rSdt').textContent = val('sdt')||'—';
+  document.getElementById('rLoai').textContent = val('loaiGiat')||'—';
+  document.getElementById('rNhan').textContent = fmtDate(val('ngayNhan'));
+  document.getElementById('rHen').textContent = fmtDate(val('ngayHen'));
+  document.getElementById('rTongMon').textContent = tongMon;
+  document.getElementById('rTongKg').textContent = tongKg;
+  var gc=val('ghiChu');
+  document.getElementById('rGhiChu').textContent = gc ? 'Ghi chú: '+gc : '';
+}
+
+document.getElementById('xem').addEventListener('click',xem);
+document.getElementById('in').addEventListener('click',function(){xem();setTimeout(function(){window.print()},80)});
+document.getElementById('reset').addEventListener('click',function(){
+  ['maDon','tenKhach','sdt','ghiChu'].forEach(function(id){document.getElementById(id).value=''});
+  document.getElementById('ngayNhan').value='';
+  document.getElementById('ngayHen').value='';
+  document.getElementById('dsMon').innerHTML='';
+  themDong();
+  xem();
+});
+</script>
+</body>
+</html>

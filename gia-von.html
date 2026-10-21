@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tính giá vốn một phần món — Bảng tính cho quán nhỏ</title>
+<meta name="description" content="Tính giá vốn, lãi gộp và tỷ lệ lãi của một phần món ngay trên điện thoại. Không đăng ký, không lưu dữ liệu.">
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#5b6470;--line:#e3e6ea;--acc:#0a6c4d;--acc2:#e8f4ef;--warn:#a3410f}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--fg);background:var(--bg)}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:1.5rem;line-height:1.3;margin:0 0 6px}
+h2{font-size:1.1rem;margin:28px 0 10px}
+p{margin:8px 0}
+.lead{color:var(--mut);margin:0 0 20px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;background:#fff}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.92rem}
+.hint{font-weight:400;color:var(--mut);font-size:.84rem;margin-left:6px}
+input,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;background:#fff;color:var(--fg);font-family:inherit}
+input:focus,select:focus{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>div{flex:1 1 160px;min-width:140px}
+.out{border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:16px;background:var(--acc2)}
+.big{font-size:1.6rem;font-weight:700;color:var(--acc);margin:2px 0}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #fff}
+.kv:last-child{border-bottom:0}
+.kv b{font-variant-numeric:tabular-nums}
+.bad{color:var(--warn)}
+.good{color:var(--acc)}
+.note{font-size:.86rem;color:var(--mut);margin-top:10px}
+a{color:var(--acc)}
+nav a{margin-right:14px}
+button{font:inherit;padding:11px 16px;border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:8px;cursor:pointer}
+button.ghost{background:#fff;color:var(--acc)}
+.bar{height:10px;background:#fff;border-radius:5px;overflow:hidden;margin-top:8px;border:1px solid var(--line)}
+.bar>i{display:block;height:100%;background:var(--acc)}
+@media (prefers-color-scheme:dark){
+:root{--bg:#14171a;--fg:#eceff2;--mut:#9aa4ae;--line:#2b3138;--acc:#3fbf8f;--acc2:#1b2622;--warn:#ff9a6b}
+.card,input,select{background:#1a1e22}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tính giá vốn một phần món — Bảng tính cho quán nhỏ">
+<meta property="og:description" content="Tính giá vốn, lãi gộp và tỷ lệ lãi của một phần món ngay trên điện thoại. Không đăng ký, không lưu dữ liệu.">
+<meta property="og:image" content="https://www.biz-vn.com/images/og/tai-lieu.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://bang-tinh-quan-nho.pages.dev/gia-von">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bảng tính cho quán nhỏ">
+<meta name="twitter:image:alt" content="Bảng tính cho quán nhỏ">
+</head>
+<body>
+<div class="wrap">
+<nav><a href="./">Trang chủ</a> <a href="https://www.biz-vn.com/tai-lieu/">Tài liệu gốc</a></nav>
+
+<h1>Tính giá vốn một phần món</h1>
+<p class="lead">Nhập giá nhập và định lượng dùng cho một phần, xem ngay lãi gộp và tỷ lệ lãi. Không đăng ký, không lưu dữ liệu lên máy chủ.</p>
+
+<div class="card">
+  <label for="ten">Nguyên liệu chính <span class="hint">tên món, ví dụ: Cà phê sữa đá</span></label>
+  <input id="ten" type="text" placeholder="Ví dụ: Cà phê sữa đá" autocomplete="off">
+
+  <div class="row">
+    <div>
+      <label for="cheDo">Tính định lượng theo</label>
+      <select id="cheDo">
+        <option value="pct">Tỷ lệ % dùng cho 1 phần</option>
+        <option value="sl">Số lượng dùng cho 1 phần</option>
+      </select>
+    </div>
+    <div>
+      <label for="giaNhap">Giá mua 1 đơn vị (đ)</label>
+      <input id="giaNhap" type="text" inputmode="decimal" placeholder="60000">
+    </div>
+  </div>
+
+  <div class="row" id="nhomPct">
+    <div>
+      <label for="pctDinhLuong">Dùng bao nhiêu % cho 1 phần</label>
+      <input id="pctDinhLuong" type="text" inputmode="decimal" placeholder="2">
+    </div>
+  </div>
+
+  <div class="row" id="nhomSl" hidden>
+    <div>
+      <label for="soLuong">Số lượng dùng cho 1 phần</label>
+      <input id="soLuong" type="text" inputmode="decimal" placeholder="0,018">
+    </div>
+    <div>
+      <label for="donVi">Đơn vị <span class="hint">ly, kg, chai, cái...</span></label>
+      <input id="donVi" type="text" placeholder="ly" autocomplete="off">
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label for="giaBan">Giá bán (đ)</label>
+      <input id="giaBan" type="text" inputmode="decimal" placeholder="25000">
+    </div>
+    <div>
+      <label for="chiPhiKhac">Chi phí khác mỗi phần (đ)</label>
+      <input id="chiPhiKhac" type="text" inputmode="decimal" placeholder="0">
+    </div>
+  </div>
+
+  <label for="mucTieu">Tỷ lệ lãi mục tiêu (%) <span class="hint">mặc định 60, đổi theo quán bạn</span></label>
+  <input id="mucTieu" type="number" inputmode="numeric" min="1" max="99" step="1" value="60">
+
+  <p style="margin-top:16px"><button type="button" id="tinh">Tính</button> <button type="button" class="ghost" id="xoa">Xoá số</button></p>
+  <p class="note">Giá mua và định lượng phải cùng đơn vị. Ví dụ: 1 kg cà phê giá 60.000 đ, một phần dùng 0,018 kg thì chọn "Số lượng" rồi nhập 0,018 — ra chi phí 1.080 đ. Quen tính theo tỷ lệ thì chọn "Tỷ lệ %" và nhập 1,8.</p>
+</div>
+
+<div id="ketQua" hidden>
+  <div class="out">
+    <div class="kv"><span>Lãi gộp mỗi phần</span><b class="big" id="oLaiGop">—</b></div>
+    <div class="kv"><span>Chi phí nguyên liệu mỗi phần</span><b id="oChiPhi">—</b></div>
+    <div class="kv"><span>Tỷ lệ lãi</span><b id="oTyLe">—</b></div>
+    <div class="bar"><i id="oBar" style="width:0%"></i></div>
+    <div class="kv" style="margin-top:10px"><span>Giá bán cần để đạt tỷ lệ lãi mục tiêu</span><b id="oGiaCan">—</b></div>
+    <div class="kv"><span>Hoặc giảm định lượng xuống còn</span><b id="oCanDinhLuong">—</b></div>
+  </div>
+  <p class="note" id="oLuuY"></p>
+</div>
+
+<h2>Dùng số này thế nào</h2>
+<p>Tính hết thực đơn trước, rồi tìm món lãi mỏng nhất để xử trước. Món lãi mỏng
+thường là món nguyên liệu dùng nhiều nhưng khách không chịu tăng giá: giảm cỡ
+phần, đổi nguyên liệu, hoặc bỏ khỏi thực đơn. Thực đơn nhỏ mà mỗi món đều lãi
+thì quay lượt khách nhanh hơn là thêm món mới.</p>
+<p class="note">Món có nhiều nguyên liệu thì cộng dồn từng dòng vào cùng một ô
+định lượng. Giá nhập lấy theo giá thực trả gần nhất, không theo giá niêm yết.</p>
+
+<p><a href="cham-cong.html">Chấm giờ ca →</a> · <a href="./">Trang chủ</a></p>
+</div>
+
+<script src="calc.js"></script>
+<script>
+var T = TinhSao;
+function money(n){return T.money(n)}
+function pct(n){return T.pct(n)}
+function sl(n){return n.toLocaleString('vi-VN',{maximumFractionDigits:3})}
+
+/* Đổi giữa hai kiểu nhập định lượng. */
+document.getElementById('cheDo').addEventListener('change',function(){
+  var pctMode = this.value === 'pct';
+  document.getElementById('nhomPct').hidden = !pctMode;
+  document.getElementById('nhomSl').hidden = pctMode;
+});
+
+function layDinhLuong(){
+  var cheDo = document.getElementById('cheDo').value;
+  if(cheDo === 'sl'){
+    return { so: T.num(document.getElementById('soLuong').value), donVi: document.getElementById('donVi').value.trim() || 'đơn vị', pct: false };
+  }
+  var p = T.num(document.getElementById('pctDinhLuong').value);
+  return { so: p/100, donVi: '%', pct: true };
+}
+
+/* Lượng tối đa hiện theo đúng kiểu người dùng đang nhập. */
+function hienLuong(luong, dl){
+  return dl.pct ? sl(luong*100)+'%' : sl(luong)+' '+dl.donVi;
+}
+
+document.getElementById('tinh').addEventListener('click',function(){
+  var dl = layDinhLuong();
+  var r = T.giaVon({
+    giaNhap: document.getElementById('giaNhap').value,
+    dinhLuong: dl.so,
+    giaBan: document.getElementById('giaBan').value,
+    chiPhiKhac: document.getElementById('chiPhiKhac').value,
+    mucTieu: document.getElementById('mucTieu').value
+  });
+  var kq=document.getElementById('ketQua');
+  var set=function(id,v,cls){var e=document.getElementById(id);e.textContent=v;if(cls!==undefined)e.className=cls;};
+  if(!r){
+    kq.hidden=false;
+    document.getElementById('oBar').style.width='0%';
+    set('oChiPhi','—');set('oLaiGop','—','big');set('oTyLe','—');set('oGiaCan','—');set('oCanDinhLuong','—');
+    document.getElementById('oLuuY').innerHTML='<b class="bad">Còn thiếu số.</b> Cần ít nhất giá mua 1 đơn vị, định lượng dùng cho 1 phần, và giá bán.';
+    return;
+  }
+
+  set('oChiPhi',money(r.chiPhi));
+  set('oLaiGop',money(r.lai),'big '+(r.lai>=0?'good':'bad'));
+  set('oTyLe',pct(r.tyLe),r.tyLe>=r.mucTieu?'good':'bad');
+  document.getElementById('oBar').style.width=Math.max(0,Math.min(100,r.tyLe))+'%';
+  set('oGiaCan',money(r.giaCan));
+  set('oCanDinhLuong',r.maxLuong>0?hienLuong(r.maxLuong,dl):'không nằm trong tầm tay');
+
+  var luy;
+  if(r.lai<0){
+    luy='<b class="bad">Bán món này đang lỗ.</b> Mỗi phần bán ra mất '+money(-r.lai)+'. Cần bán '+money(r.giaCan)+' mới hòa vốn, hoặc bỏ món này khỏi thực đơn.';
+  }else if(r.tyLe<r.mucTieu){
+    luy='Tỷ lệ lãi đang thấp hơn mục tiêu '+r.mucTieu+'%. Nâng giá lên '+money(r.giaCan)+' hoặc giảm định lượng xuống còn '+hienLuong(r.maxLuong,dl)+' là đạt.';
+  }else{
+    luy='Món này đang lãi tốt. Giữ nguyên công thức và định lượng, đừng nới lỏng khi đông khách.';
+  }
+  document.getElementById('oLuuY').innerHTML=luy;
+  kq.hidden=false;
+});
+
+document.getElementById('xoa').addEventListener('click',function(){
+  ['giaNhap','pctDinhLuong','soLuong','giaBan','chiPhiKhac','donVi'].forEach(function(id){document.getElementById(id).value=''});
+  document.getElementById('ten').value='';
+  document.getElementById('mucTieu').value='60';
+  document.getElementById('cheDo').value='pct';
+  document.getElementById('nhomPct').hidden=false;
+  document.getElementById('nhomSl').hidden=true;
+  document.getElementById('ketQua').hidden=true;
+});
+</script>
+</body>
+</html>
