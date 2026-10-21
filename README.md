@@ -18,17 +18,17 @@ Giá và định lượng nhập vào đều là số thường: `60.000`, `0,01
 
 Cách nhanh nhất, không cần cài gì, không cần mật khẩu:
 
-1. Vào <https://app.netlify.com/drop>
+1. Vào trang kéo thả của Netlify: <https://netlify.com/drop>
 2. Kéo cả thư mục `bang-tinh-quan-nho` vào ô trên trang.
-3. Trang cho sẵn một địa chỉ dạng `ten-giong-ban.netlify.app`.
+3. Trang cho sẵn một địa chỉ dạng `ten-giong-ban.netlify.com`.
 4. Muốn đổi tên miền thì vào **Site settings → Change site name**.
 
-Có thêm 2 lựa chọn nữa nếu muốn dùng lâu dài hơn:
+Có thêm lựa chọn nữa nếu muốn dùng lâu dài hơn:
 
 - **Cloudflare Pages** (miễn phí, không giới hạn băng thông): cần tài khoản
   Cloudflare và một mã API. Chạy lệnh trong mục "Lệnh tự động" bên dưới.
-- **Surge.sh** (miễn phí): cần tài khoản email, xong là có địa chỉ
-  `ten-giong-ban.surge.sh`.
+- **GitHub Pages** (miễn phí): bật trong phần Settings của repo, chọn nhánh
+  `main` và thư mục `/`.
 
 ## Lệnh tự động
 
