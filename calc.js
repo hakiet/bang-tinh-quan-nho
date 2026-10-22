@@ -217,6 +217,38 @@
     };
   }
 
+  /* Vốn mở quán.
+     tienCoc = tiền cọc mặt bằng (đ); suaChua = sửa chữa, trang trí (đ);
+     thietBi = thiết bị, máy móc, tủ kệ (đ); tonKhoMo = tồn kho mở hàng (đ);
+     khacMo = giấy phép, quảng cáo, chi phí khác lúc mở (đ);
+     vay = số tiền vay (đ), dùng để ra vốn tự quân;
+     chiPhiThang = chi phí vận hành mỗi tháng (đ);
+     doanhThuThang = doanh thu kỳ vọng mỗi tháng (đ). */
+  function vonMoQuan(o) {
+    var tienCoc = num(o.tienCoc);
+    var suaChua = num(o.suaChua);
+    var thietBi = num(o.thietBi);
+    var tonKhoMo = num(o.tonKhoMo);
+    var khacMo = num(o.khacMo);
+    var vay = num(o.vay);
+    var chiPhiThang = num(o.chiPhiThang);
+    var doanhThuThang = num(o.doanhThuThang);
+    if (vay < 0) vay = 0; /* nhập âm là nhập nhầm */
+    var tongVon = tienCoc + suaChua + thietBi + tonKhoMo + khacMo;
+    if (tongVon <= 0 && doanhThuThang <= 0) return null;
+    var vonTuQuan = tongVon - vay;
+    if (vonTuQuan < 0) vonTuQuan = 0;
+    var loiNhuanThang = doanhThuThang - chiPhiThang;
+    return {
+      tongVon: tongVon,
+      vonTuQuan: vonTuQuan,
+      vay: vay,
+      loiNhuanThang: loiNhuanThang,
+      thangHoaVon: loiNhuanThang > 0 ? tongVon / loiNhuanThang : null,
+      tyLeChiPhi: doanhThuThang > 0 ? chiPhiThang / doanhThuThang * 100 : null
+    };
+  }
+
   function money(n) {
     return Math.round(n).toLocaleString('vi-VN') + ' đ';
   }
@@ -224,5 +256,5 @@
     return n.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + '%';
   }
 
-  g.TinhSao = { num: num, giaVon: giaVon, laiGop: laiGop, hoaVon: hoaVon, hoaHong: hoaHong, nhapHang: nhapHang, thueMatBang: thueMatBang, caLam: caLam, luongTheoCa: luongTheoCa, money: money, pct: pct };
+  g.TinhSao = { num: num, giaVon: giaVon, laiGop: laiGop, hoaVon: hoaVon, hoaHong: hoaHong, nhapHang: nhapHang, thueMatBang: thueMatBang, caLam: caLam, luongTheoCa: luongTheoCa, vonMoQuan: vonMoQuan, money: money, pct: pct };
 })(typeof window !== 'undefined' ? window : globalThis);

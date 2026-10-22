@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tính vốn mở quán — Bảng tính cho quán nhỏ</title>
+<meta name="description" content="Nhập tiền cọc, sửa chữa, thiết bị, tồn kho mở hàng và chi phí vận hành mỗi tháng để ra tổng vốn mở quán, vốn tự quân và số tháng hoàn vốn. Không đăng ký, không lưu dữ liệu.">
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#5b6470;--line:#e3e6ea;--acc:#0a6c4d;--acc2:#e8f4ef;--warn:#a3410f}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--fg);background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:1.5rem;line-height:1.3;margin:0 0 6px}
+h2{font-size:1.1rem;margin:28px 0 10px}
+p{margin:8px 0}
+ul{margin:8px 0;padding-left:20px}
+li{margin:4px 0}
+.lead{color:var(--mut);margin:0 0 20px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;background:#fff}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.92rem}
+.hint{font-weight:400;color:var(--mut);font-size:.84rem;margin-left:6px}
+input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;background:#fff;color:var(--fg);font-family:inherit}
+input:focus{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>div{flex:1 1 140px;min-width:120px}
+.out{border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:16px;background:var(--acc2)}
+.big{font-size:1.6rem;font-weight:700;color:var(--acc);margin:2px 0}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #fff}
+.kv:last-child{border-bottom:0}
+.kv b{font-variant-numeric:tabular-nums}
+.bad{color:var(--warn)}
+.good{color:var(--acc)}
+.note{font-size:.86rem;color:var(--mut);margin-top:10px}
+a{color:var(--acc)}
+nav a{margin-right:14px}
+button{font:inherit;padding:11px 16px;border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:8px;cursor:pointer}
+button.ghost{background:#fff;color:var(--acc)}
+@media (prefers-color-scheme:dark){
+:root{--bg:#14171a;--fg:#eceff2;--mut:#9aa4ae;--line:#2b3138;--acc:#3fbf8f;--acc2:#1b2622;--warn:#ff9a6b}
+.card,input{background:#1a1e22}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tính vốn mở quán — Bảng tính cho quán nhỏ">
+<meta property="og:description" content="Nhập tiền cọc, sửa chữa, thiết bị, tồn kho mở hàng và chi phí vận hành mỗi tháng để ra tổng vốn mở quán, vốn tự quân và số tháng hoàn vốn. Không đăng ký, không lưu dữ liệu.">
+<meta property="og:image" content="https://www.biz-vn.com/images/og/tai-lieu.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://bang-tinh-quan-nho.pages.dev/von-mo-quan">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bảng tính cho quán nhỏ">
+<meta name="twitter:image:alt" content="Bảng tính cho quán nhỏ">
+</head>
+<body>
+<div class="wrap">
+<nav><a href="./">Trang chủ</a> <a href="https://www.biz-vn.com/tai-lieu/">Tài liệu miễn phí cho chủ quán</a></nav>
+
+<h1>Tính vốn mở quán</h1>
+<p class="lead">Nhập tiền cọc, chi phí sửa chữa, thiết bị, tồn kho mở hàng và chi phí vận hành hằng tháng. Ra tổng vốn phải chuẩn bị, vốn tự quân và số tháng hoàn vốn.</p>
+
+<div class="card">
+  <h2 style="margin-top:0">Khoản chi một lần lúc mở</h2>
+  <label for="tienCoc">Tiền cọc mặt bằng (đ)</label>
+  <input id="tienCoc" type="text" inputmode="decimal" placeholder="Ví dụ: 30000000">
+
+  <div class="row">
+    <div>
+      <label for="suaChua">Sửa chữa, trang trí (đ)</label>
+      <input id="suaChua" type="text" inputmode="decimal" placeholder="0">
+    </div>
+    <div>
+      <label for="thietBi">Thiết bị, tủ kệ (đ)</label>
+      <input id="thietBi" type="text" inputmode="decimal" placeholder="0">
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label for="tonKhoMo">Tồn kho mở hàng (đ)</label>
+      <input id="tonKhoMo" type="text" inputmode="decimal" placeholder="0">
+    </div>
+    <div>
+      <label for="khacMo">Giấy phép, quảng cáo (đ)</label>
+      <input id="khacMo" type="text" inputmode="decimal" placeholder="0">
+    </div>
+  </div>
+
+  <label for="vay">Trong đó vay (đ) <span class="hint">để ra vốn tự quân</span></label>
+  <input id="vay" type="text" inputmode="decimal" placeholder="0">
+
+  <h2>Chi phí chạy mỗi tháng</h2>
+  <div class="row">
+    <div>
+      <label for="chiPhiThang">Chi phí vận hành (đ)</label>
+      <input id="chiPhiThang" type="text" inputmode="decimal" placeholder="Ví dụ: 45000000">
+    </div>
+    <div>
+      <label for="doanhThuThang">Doanh thu kỳ vọng (đ)</label>
+      <input id="doanhThuThang" type="text" inputmode="decimal" placeholder="Ví dụ: 90000000">
+    </div>
+  </div>
+
+  <p style="margin-top:16px"><button type="button" id="tinh">Tính vốn</button> <button type="button" class="ghost" id="xoa">Xoá</button></p>
+  <p class="note">Chi phí vận hành gồm cả tiền thuê mặt bằng, lương, điện nước, vật tư. Con số này là chỗ bắt đầu, sửa lại theo quán của bạn.</p>
+</div>
+
+<div id="ketQua" hidden>
+  <div class="out">
+    <div class="kv"><span>Tổng vốn mở quán</span><b class="big" id="oTongVon">—</b></div>
+    <div class="kv"><span>Vốn tự quân</span><b id="oVonTuQuan">—</b></div>
+    <div class="kv"><span>Lợi nhuận mỗi tháng</span><b id="oLoiNhuan">—</b></div>
+    <div class="kv"><span>Số tháng hoàn vốn</span><b id="oThangHoaVon">—</b></div>
+    <div class="kv"><span>Chi phí vận hành trên doanh thu</span><b id="oTyLeChiPhi">—</b></div>
+  </div>
+  <p class="note" id="oLuuY"></p>
+</div>
+
+<h2>Đọc kết quả thế nào</h2>
+<p>Tổng vốn mở quán là số tiền bạn phải có trong tay trước ngày khai trương. Trừ phần vay ra bạn mới biết vốn tự quân là bao nhiêu. Số tháng hoàn vốn là lúc nào tiền vốn quay lại túi bạn.</p>
+<p class="note">Muốn xem mỗi tháng quán lãi bao nhiêu thì bấm
+<a href="lai-gop.html">tính lãi gộp</a>. Muốn biết thuê mặt bằng có đang chiếm quá nhiều doanh thu không thì bấm
+<a href="thue-mat-bang.html">tính mức thuê tối đa</a>.</p>
+
+<h2>Bài hướng dẫn đi kèm</h2>
+<ul>
+  <li><a href="https://www.biz-vn.com/blog/cua-hang/mo-quan-can-bao-nhieu-tien/">Mở quán cần bao nhiêu tiền? Cách tính vốn mở quán</a></li>
+  <li><a href="https://www.biz-vn.com/blog/ban-le/von-mo-dai-ly-cap-nho/">Mở đại lý cấp nhỏ cần chuẩn bị bao nhiêu vốn là vừa?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/bida/von-mo-san-bida-nho/">Mở sân bida nhỏ cần bao nhiêu vốn và bao lâu thì thu hồi được?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/chung/chuan-bi-mo-cua-moi-sang/">Chuẩn bị mở cửa mỗi sáng cần làm gì?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/chung/so-sanh-thue-mat-bang-ngan-han-va-dai-han/">Thuê mặt bằng ngắn hạn và dài hạn quán nhỏ nên chọn cách nào?</a></li>
+</ul>
+
+<p><a href="thue-mat-bang.html">← Tính mức thuê tối đa</a> · <a href="cham-cong.html">Chấm giờ ca →</a></p>
+</div>
+
+<script src="calc.js"></script>
+<script>
+var T = TinhSao;
+
+function tinhVon(){
+  var r = T.vonMoQuan({
+    tienCoc: document.getElementById('tienCoc').value,
+    suaChua: document.getElementById('suaChua').value,
+    thietBi: document.getElementById('thietBi').value,
+    tonKhoMo: document.getElementById('tonKhoMo').value,
+    khacMo: document.getElementById('khacMo').value,
+    vay: document.getElementById('vay').value,
+    chiPhiThang: document.getElementById('chiPhiThang').value,
+    doanhThuThang: document.getElementById('doanhThuThang').value
+  });
+  var kq = document.getElementById('ketQua');
+  var set = function(id, v, cls){ var e = document.getElementById(id); e.textContent = v; if (cls !== undefined) e.className = cls; };
+  if (!r) {
+    kq.hidden = false;
+    set('oTongVon', '—'); set('oVonTuQuan', '—'); set('oLoiNhuan', '—'); set('oThangHoaVon', '—'); set('oTyLeChiPhi', '—');
+    document.getElementById('oLuuY').innerHTML = '<b class="bad">Chưa nhập chi phí mở quán, cũng chưa nhập doanh thu kỳ vọng.</b>';
+    return;
+  }
+  set('oTongVon', T.money(r.tongVon));
+  set('oVonTuQuan', T.money(r.vonTuQuan));
+  set('oLoiNhuan', T.money(r.loiNhuanThang), r.loiNhuanThang > 0 ? 'good' : 'bad');
+  set('oThangHoaVon', r.thangHoaVon === null ? '—' : r.thangHoaVon.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' tháng', r.thangHoaVon === null ? '' : (r.thangHoaVon > 36 ? 'bad' : 'good'));
+  set('oTyLeChiPhi', r.tyLeChiPhi === null ? '—' : T.pct(r.tyLeChiPhi), r.tyLeChiPhi === null ? '' : (r.tyLeChiPhi > 50 ? 'bad' : 'good'));
+
+  var luy;
+  if (r.loiNhuanThang <= 0) {
+    luy = '<b class="bad">Doanh thu kỳ vọng chưa đủ bù chi phí vận hành mỗi tháng.</b> Hoàn vốn sẽ không bao giờ xảy ra nếu tình hình giữ nguyên.';
+  } else if (r.thangHoaVon > 36) {
+    luy = '<b class="bad">Cần hơn 36 tháng mới hoàn vốn.</b> Xem lại tiền cọc và chi phí sửa chữa, hoặc tính lại doanh thu kỳ vọng.';
+  } else if (r.tyLeChiPhi !== null && r.tyLeChiPhi > 50) {
+    luy = 'Chi phí vận hành ăn ' + T.pct(r.tyLeChiPhi) + ' doanh thu. Quán nhỏ mà chi phí cố định cao vậy thì rất dễ lỗ.';
+  } else {
+    luy = 'Hoàn vốn khoảng ' + r.thangHoaVon.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' tháng nếu doanh thu giữ như kỳ vọng. Ghi lại số này để theo dõi hằng tháng.';
+  }
+  document.getElementById('oLuuY').innerHTML = luy;
+  kq.hidden = false;
+}
+
+document.getElementById('tinh').addEventListener('click', tinhVon);
+
+document.getElementById('xoa').addEventListener('click', function(){
+  document.getElementById('tienCoc').value = '';
+  document.getElementById('suaChua').value = '';
+  document.getElementById('thietBi').value = '';
+  document.getElementById('tonKhoMo').value = '';
+  document.getElementById('khacMo').value = '';
+  document.getElementById('vay').value = '';
+  document.getElementById('chiPhiThang').value = '';
+  document.getElementById('doanhThuThang').value = '';
+  document.getElementById('ketQua').hidden = true;
+});
+</script>
+</body>
+</html>
