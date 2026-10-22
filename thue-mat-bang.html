@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tính mức thuê mặt bằng tối đa — Bảng tính cho quán nhỏ</title>
+<meta name="description" content="Tính mức tiền thuê mặt bằng tối đa mỗi tháng mà quán vẫn lời: nhập doanh thu dự kiến, các chi phí cố định khác và lợi nhuận tối thiểu, ra ngay số tiền thuê an toàn, tiền thuê trên m2 và số tháng tiền đặt cọc chiếm.">
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#5b6470;--line:#e3e6ea;--acc:#0a6c4d;--acc2:#e8f4ef;--warn:#a3410f}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--fg);background:var(--bg)}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:1.5rem;line-height:1.3;margin:0 0 6px}
+h2{font-size:1.1rem;margin:28px 0 10px}
+p{margin:8px 0}
+ul{margin:8px 0;padding-left:20px}
+li{margin:4px 0}
+.lead{color:var(--mut);margin:0 0 20px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;background:#fff}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.92rem}
+.hint{font-weight:400;color:var(--mut);font-size:.84rem;margin-left:6px}
+input,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;background:#fff;color:var(--fg);font-family:inherit}
+input:focus,select:focus{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>div{flex:1 1 160px;min-width:140px}
+.out{border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:16px;background:var(--acc2)}
+.big{font-size:1.6rem;font-weight:700;color:var(--acc);margin:2px 0}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #fff}
+.kv:last-child{border-bottom:0}
+.kv b{font-variant-numeric:tabular-nums}
+.bad{color:var(--warn)}
+.good{color:var(--acc)}
+.note{font-size:.86rem;color:var(--mut);margin-top:10px}
+a{color:var(--acc)}
+nav a{margin-right:14px}
+button{font:inherit;padding:11px 16px;border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:8px;cursor:pointer}
+button.ghost{background:#fff;color:var(--acc)}
+@media (prefers-color-scheme:dark){
+:root{--bg:#14171a;--fg:#eceff2;--mut:#9aa4ae;--line:#2b3138;--acc:#3fbf8f;--acc2:#1b2622;--warn:#ff9a6b}
+.card,input,select{background:#1a1e22}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tính mức thuê mặt bằng tối đa — Bảng tính cho quán nhỏ">
+<meta property="og:description" content="Tính mức tiền thuê mặt bằng tối đa mỗi tháng mà quán vẫn lời: nhập doanh thu dự kiến, các chi phí cố định khác và lợi nhuận tối thiểu, ra ngay số tiền thuê an toàn, tiền thuê trên m2 và số tháng tiền đặt cọc chiếm.">
+<meta property="og:image" content="https://www.biz-vn.com/images/og/tai-lieu.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://bang-tinh-quan-nho.pages.dev/thue-mat-bang">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bảng tính cho quán nhỏ">
+<meta name="twitter:image:alt" content="Bảng tính cho quán nhỏ">
+</head>
+<body>
+<div class="wrap">
+<nav><a href="./">Trang chủ</a> <a href="https://www.biz-vn.com/tai-lieu/">Tài liệu miễn phí cho chủ quán</a></nav>
+
+<h1>Tính mức thuê mặt bằng tối đa</h1>
+<p class="lead">Nhập doanh thu dự kiến mỗi tháng, các chi phí cố định khác và số lợi nhuận tối thiểu bạn muốn giữ lại, bảng tính ra mức tiền thuê mặt bằng an toàn trước khi ký hợp đồng. Không đăng ký, không lưu dữ liệu lên máy chủ.</p>
+
+<div class="card">
+  <label for="doanhThu">Doanh thu dự kiến mỗi tháng (đ)</label>
+  <input id="doanhThu" type="text" inputmode="decimal" placeholder="80000000">
+
+  <label for="chiPhiKhac">Các chi phí cố định khác mỗi tháng (đ) <span class="hint">điện nước, lương, thuê thiết bị</span></label>
+  <input id="chiPhiKhac" type="text" inputmode="decimal" placeholder="25000000">
+
+  <label for="loiNhuan">Lợi nhuận tối thiểu muốn giữ lại mỗi tháng (đ)</label>
+  <input id="loiNhuan" type="text" inputmode="decimal" placeholder="10000000">
+
+  <div class="row">
+    <div>
+      <label for="dienTich">Diện tích mặt bằng (m2) <span class="hint">tuỳ chọn</span></label>
+      <input id="dienTich" type="text" inputmode="decimal" placeholder="40">
+    </div>
+    <div>
+      <label for="tienCoc">Tiền đặt cọc dự kiến (đ) <span class="hint">tuỳ chọn</span></label>
+      <input id="tienCoc" type="text" inputmode="decimal" placeholder="20000000">
+    </div>
+  </div>
+
+  <p style="margin-top:16px"><button type="button" id="tinh">Tính</button> <button type="button" class="ghost" id="xoa">Xoá số</button></p>
+  <p class="note">Doanh thu dự kiến thì lấy theo tháng bình thường, không lấy tháng đông nhất. Chi phí cố định khác gồm lương, điện nước, thuê thiết bị, bảo trì — những khoản không đổi theo số hàng bán.</p>
+</div>
+
+<div id="ketQua" hidden>
+  <div class="out">
+    <div class="kv"><span>Mức thuê tối đa mỗi tháng</span><b class="big" id="oTienThue">—</b></div>
+    <div class="kv"><span>Tương đương một năm</span><b id="oTienThueNam">—</b></div>
+    <div class="kv" style="margin-top:10px"><span>Tiền thuê chiếm bao nhiêu % doanh thu</span><b id="oTyLeThue">—</b></div>
+    <div class="kv"><span>Tiền thuê trên mỗi m2 mỗi tháng</span><b id="oTrenM2">—</b></div>
+    <div class="kv"><span>Tiền đặt cọc chiếm mấy tháng tiền thuê</span><b id="oThangCoc">—</b></div>
+  </div>
+  <p class="note" id="oLuuY"></p>
+</div>
+
+<h2>Đọc kết quả thế nào</h2>
+<p>Số tiền thuê tối đa là phần doanh thu còn lại sau khi trừ hết chi phí cố định
+khác và phần lợi nhuận bạn muốn giữ. Ký hợp đồng với mức cao hơn số này thì
+tháng đầu tiên quán đã lỗ, và những tháng sau phải gồng gánh bù lại.</p>
+<p>Tỷ lệ tiền thuê trên doanh thu cũng nên nhìn. Ví dụ nếu tiền thuê chiếm
+hơn 20% doanh thu thì phần còn lại cho hàng hóa và lương đã mỏng, gặp tháng
+yếu là khó chịu. Số này chỉ là mốc tham khảo, quán nào cũng khác nhau nên
+tự so với kế hoạch của mình.</p>
+<p>Tiền đặt cọc thường bằng một vài tháng tiền thuê, nên khi nó chiếm quá
+nhiều tháng thì dòng tiền của quán bị kẹt ngay lúc mới mở, đúng lúc cần
+tiền để nhập hàng. Số tháng tiền đặt cọc chiếm chính là để bạn thấy điều đó.</p>
+<p>Muốn xem tổng quan chi phí cố định và lợi nhuận của cả tháng thì mở
+[bảng tính lãi gộp cả quán](https://bang-tinh-quan-nho.pages.dev/lai-gop):
+nhập doanh thu, tiền mua hàng và các khoản chi phí, bảng tính ra phần lãi còn
+lại sau khi trừ chi phí không đổi.</p>
+
+<h2>Bài hướng dẫn đi kèm</h2>
+<ul>
+  <li><a href="https://www.biz-vn.com/blog/cafe/cach-chon-mat-bang-quan-cafe/">Chọn mặt bằng quán cà phê thế nào để đông khách mà thuê vừa sức?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/chung/so-sanh-thue-mat-bang-ngan-han-va-dai-han/">Thuê mặt bằng ngắn hạn và dài hạn quán nhỏ nên chọn cách nào?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/cua-hang/so-sanh-thue-mat-bang-va-ban-online/">Mở cửa hàng mặt bằng hay bán online cái nào lời hơn?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/chung/tinh-loi-nhuan/">Tính lợi nhuận bán hàng sao cho chuẩn?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/cua-hang/theo-doi-doanh-thu-cua-hang/">Theo dõi doanh thu cửa hàng mỗi ngày ra sao?</a></li>
+</ul>
+
+<p><a href="lai-gop.html">Tính lãi gộp cả quán →</a> · <a href="./">Trang chủ</a></p>
+</div>
+
+<script src="calc.js"></script>
+<script>
+var T = TinhSao;
+function money(n){return T.money(n)}
+function pct(n){return T.pct(n)}
+function so(n){return n.toLocaleString('vi-VN',{maximumFractionDigits:1})}
+
+document.getElementById('tinh').addEventListener('click',function(){
+  var doanhThu = document.getElementById('doanhThu').value;
+  var r = T.thueMatBang({
+    doanhThu: doanhThu,
+    chiPhiKhac: document.getElementById('chiPhiKhac').value,
+    loiNhuan: document.getElementById('loiNhuan').value,
+    dienTich: document.getElementById('dienTich').value,
+    tienCoc: document.getElementById('tienCoc').value
+  });
+  var kq=document.getElementById('ketQua');
+  var set=function(id,v,cls){var e=document.getElementById(id);e.textContent=v;if(cls!==undefined)e.className=cls;};
+  if(!r){
+    kq.hidden=false;
+    set('oTienThue','—','big');set('oTienThueNam','—');set('oTyLeThue','—');set('oTrenM2','—');set('oThangCoc','—');
+    if(T.num(doanhThu)<=0){
+      document.getElementById('oLuuY').innerHTML='<b class="bad">Còn thiếu doanh thu dự kiến.</b> Nhập số tiền bán ra trong một tháng bình thường rồi tính lại.';
+    }else{
+      document.getElementById('oLuuY').innerHTML='<b class="bad">Doanh thu dự kiến chưa đủ.</b> Chi phí cố định và phần lợi nhuận muốn giữ đã dùng hết doanh thu, chưa còn tiền thuê mặt bằng. Thử bỏ bớt chi phí cố định hoặc tính lại với doanh thu cao hơn.';
+    }
+    return;
+  }
+
+  set('oTienThue',money(r.tienThue),'big');
+  set('oTienThueNam',money(r.tienThueNam));
+  set('oTyLeThue',pct(r.tyLeThue));
+  set('oTrenM2',r.tienTrenM2===null?'—':money(r.tienTrenM2));
+  set('oThangCoc',r.soThangCoc===null?'—':so(r.soThangCoc)+' tháng');
+
+  var luy='Mức thuê an toàn là '+money(r.tienThue)+' mỗi tháng, tức '+pct(r.tyLeThue)+' doanh thu dự kiến. ';
+  if(r.tyLeThue>20){
+    luy+='Tỷ lệ này hơn 20%, tức là phần còn lại cho hàng hóa và lương đã mỏng, nên xem lại xem có thể giảm chi phí cố định hoặc tăng doanh thu dự kiến không. ';
+  }else{
+    luy+='Tỷ lệ này còn dưới 20%, phần dành cho hàng hóa và lương còn chỗ. ';
+  }
+  if(r.soThangCoc!==null){
+    luy+='Tiền đặt cọc chiếm '+so(r.soThangCoc)+' tháng tiền thuê, nhớ so với dòng tiền lúc mới mở.';
+  }
+  document.getElementById('oLuuY').innerHTML=luy;
+  kq.hidden=false;
+});
+
+document.getElementById('xoa').addEventListener('click',function(){
+  ['doanhThu','chiPhiKhac','loiNhuan','dienTich','tienCoc'].forEach(function(id){document.getElementById(id).value=''});
+  document.getElementById('ketQua').hidden=true;
+});
+</script>
+</body>
+</html>

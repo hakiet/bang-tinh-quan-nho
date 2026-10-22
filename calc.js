@@ -163,6 +163,29 @@
     };
   }
 
+  /* Mức thuê mặt bằng tối đa trong một tháng.
+     doanhThu = doanh thu dự kiến mỗi tháng; chiPhiKhac = các chi phí cố định khác;
+     loiNhuan = lợi nhuận tối thiểu muốn giữ; dienTich = diện tích mặt bằng (m2);
+     tienCoc = tiền đặt cọc dự kiến. */
+  function thueMatBang(o) {
+    var doanhThu = num(o.doanhThu);
+    var chiPhiKhac = num(o.chiPhiKhac);
+    var loiNhuan = num(o.loiNhuan);
+    var dienTich = num(o.dienTich);
+    var tienCoc = num(o.tienCoc);
+    if (doanhThu <= 0) return null;
+    var tienThue = doanhThu - chiPhiKhac - loiNhuan;
+    if (tienThue <= 0) return null;
+    return {
+      doanhThu: doanhThu,
+      tienThue: tienThue,
+      tienThueNam: tienThue * 12,
+      tyLeThue: tienThue / doanhThu * 100,
+      tienTrenM2: dienTich > 0 ? tienThue / dienTich : null,
+      soThangCoc: tienCoc > 0 ? tienCoc / tienThue : null
+    };
+  }
+
   function money(n) {
     return Math.round(n).toLocaleString('vi-VN') + ' đ';
   }
@@ -170,5 +193,5 @@
     return n.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + '%';
   }
 
-  g.TinhSao = { num: num, giaVon: giaVon, laiGop: laiGop, hoaVon: hoaVon, hoaHong: hoaHong, nhapHang: nhapHang, caLam: caLam, money: money, pct: pct };
+  g.TinhSao = { num: num, giaVon: giaVon, laiGop: laiGop, hoaVon: hoaVon, hoaHong: hoaHong, nhapHang: nhapHang, thueMatBang: thueMatBang, caLam: caLam, money: money, pct: pct };
 })(typeof window !== 'undefined' ? window : globalThis);
