@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bảng tính cho quán nhỏ — giá vốn, lãi gộp, hòa vốn, hoa hồng, chấm ca, biên nhận giặt</title>
-<meta name="description" content="Sáu bảng tính mở trên điện thoại: tính giá vốn món, lãi gộp cả quán, điểm hòa vốn, hoa hồng nhân viên, chấm giờ ca, mẫu biên nhận giặt. Không đăng ký, không lưu dữ liệu lên máy chủ.">
+<title>Bảng tính cho quán nhỏ — giá vốn, lãi gộp, hòa vốn, hoa hồng, nhập hàng</title>
+<meta name="description" content="Bảy bảng tính mở trên điện thoại: tính giá vốn món, lãi gộp cả quán, điểm hòa vốn, hoa hồng nhân viên, tiền nhập hàng, chấm giờ ca, mẫu biên nhận giặt. Không đăng ký, không lưu dữ liệu lên máy chủ.">
 <style>
 :root{--bg:#fff;--fg:#1a1a1a;--mut:#5b6470;--line:#e3e6ea;--acc:#0a6c4d;--acc2:#e8f4ef}
 *{box-sizing:border-box}
@@ -31,8 +31,8 @@ footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-si
 }
 </style>
 <meta property="og:type" content="website">
-<meta property="og:title" content="Bảng tính cho quán nhỏ — giá vốn, lãi gộp, hòa vốn, hoa hồng, chấm ca, biên nhận giặt">
-<meta property="og:description" content="Sáu bảng tính mở trên điện thoại: tính giá vốn món, lãi gộp cả quán, điểm hòa vốn, hoa hồng nhân viên, chấm giờ ca, mẫu biên nhận giặt. Không đăng ký, không lưu dữ liệu lên máy chủ.">
+<meta property="og:title" content="Bảng tính cho quán nhỏ — giá vốn, lãi gộp, hòa vốn, hoa hồng, nhập hàng">
+<meta property="og:description" content="Bảy bảng tính mở trên điện thoại: tính giá vốn món, lãi gộp cả quán, điểm hòa vốn, hoa hồng nhân viên, tiền nhập hàng, chấm giờ ca, mẫu biên nhận giặt. Không đăng ký, không lưu dữ liệu lên máy chủ.">
 <meta property="og:image" content="https://www.biz-vn.com/images/og/tai-lieu.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://bang-tinh-quan-nho.pages.dev/">
@@ -44,7 +44,7 @@ footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-si
 <body>
 <div class="wrap">
 <h1>Bảng tính cho quán nhỏ</h1>
-<p class="lead">Sáu công cụ tính nhanh, dùng trên điện thoại. Không cần đăng ký, không cần cài, không lưu gì trên máy chủ.</p>
+<p class="lead">Bảy công cụ tính nhanh, dùng trên điện thoại. Không cần đăng ký, không cần cài, không lưu gì trên máy chủ.</p>
 
 <div class="cards">
   <div class="card">
@@ -78,6 +78,12 @@ footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-si
   </div>
 
   <div class="card">
+    <h3><a href="tien-nhap-hang.html">Tính tiền nhập hàng cho một đợt</a></h3>
+    <p>Biết mỗi đợt nhập cần bao nhiêu tiền trước khi mở ví. Ra số lượng cần mua, tổng tiền phải chuẩn bị, và phần dự phòng hư hỏng.</p>
+    <a class="btn" href="tien-nhap-hang.html">Mở bảng tính</a>
+  </div>
+
+  <div class="card">
     <h3><a href="bien-nhan-giat.html">Mẫu biên nhận giặt</a></h3>
     <p>Mẫu điền tay rồi in ra, hoặc chép vào sổ. Ghi mã đơn, số món, số kg, loại giặt, ngày hẹn trả và ghi chú đồ đặc biệt.</p>
     <a class="btn" href="bien-nhan-giat.html">Mở mẫu biên nhận</a>
@@ -87,7 +93,8 @@ footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-si
 <h2>Vì sao làm mấy trang này</h2>
 <p>Quán nhỏ thường không thiếu số liệu, mà thiếu chỗ để tính. Sổ tay ghi được
 doanh thu nhưng không tự ra giá vốn từng món, không tự ra lãi gộp cả tháng,
-không tự ra tiền công mỗi ca, không tự ra hoa hồng từ doanh thu. Sáu trang này làm đúng mấy việc đó, không đòi hỏi
+không tự ra tiền công mỗi ca, không tự ra hoa hồng từ doanh thu,
+không tự ra tiền nhập hàng mỗi đợt. Bảy trang này làm đúng mấy việc đó, không đòi hỏi
 gì thêm.</p>
 <p>Mỗi công cụ chỉ cần vài con số bạn đã có sẵn: giá mua một đơn vị nguyên liệu,
 tỷ lệ dùng cho một phần, giá bán, giờ vào giờ ra. Không hỏi tên, không hỏi số
@@ -118,6 +125,10 @@ xong một ca thì chép lại vào sổ.</p>
   <li><a href="https://www.biz-vn.com/blog/cua-hang/thue-khoan-ho-kinh-doanh-muc-han-nop-tam-dung/">Thuế khoán hộ kinh doanh: mức, hạn nộp và tạm dừng</a></li>
   <li><a href="https://www.biz-vn.com/blog/ban-le/ban-hang-facebook-marketplace-cho-cua-hang-nho/">Bán hàng Facebook Marketplace cho cửa hàng nhỏ</a></li>
   <li><a href="https://www.biz-vn.com/blog/chung/cong-no-khach-doanh-nghiep-va-hoa-don-khi-ban-hang/">Công nợ khách doanh nghiệp và hóa đơn khi bán hàng</a></li>
+  <li><a href="https://www.biz-vn.com/blog/chung/quan-ly-hang-nhap/">Quản lý hàng nhập cần lưu ý gì?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/chung/quan-ly-ton-kho/">Quản lý tồn kho thế nào cho chuẩn?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/cua-hang/quan-ly-ton-kho-cua-hang/">Quản lý tồn kho cửa hàng thế nào cho gọn?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/tap-hoa/quan-ly-ton-kho-tap-hoa/">Quản lý tồn kho tạp hóa giải quyết vấn đề gì?</a></li>
 </ul>
 
 <footer>

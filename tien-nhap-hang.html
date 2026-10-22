@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tính tiền nhập hàng cho một đợt — Bảng tính cho quán nhỏ</title>
+<meta name="description" content="Tính tiền nhập hàng cho một đợt: nhập lượng bán mỗi ngày, số ngày bán và giá nhập là ra số lượng cần mua và tổng tiền phải chuẩn bị, có tính cả phần dự phòng hư hỏng.">
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#5b6470;--line:#e3e6ea;--acc:#0a6c4d;--acc2:#e8f4ef;--warn:#a3410f}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--fg);background:var(--bg)}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:1.5rem;line-height:1.3;margin:0 0 6px}
+h2{font-size:1.1rem;margin:28px 0 10px}
+p{margin:8px 0}
+ul{margin:8px 0;padding-left:20px}
+li{margin:4px 0}
+.lead{color:var(--mut);margin:0 0 20px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;background:#fff}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.92rem}
+.hint{font-weight:400;color:var(--mut);font-size:.84rem;margin-left:6px}
+input,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;background:#fff;color:var(--fg);font-family:inherit}
+input:focus,select:focus{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>div{flex:1 1 160px;min-width:140px}
+.out{border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:16px;background:var(--acc2)}
+.big{font-size:1.6rem;font-weight:700;color:var(--acc);margin:2px 0}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #fff}
+.kv:last-child{border-bottom:0}
+.kv b{font-variant-numeric:tabular-nums}
+.bad{color:var(--warn)}
+.good{color:var(--acc)}
+.note{font-size:.86rem;color:var(--mut);margin-top:10px}
+a{color:var(--acc)}
+nav a{margin-right:14px}
+button{font:inherit;padding:11px 16px;border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:8px;cursor:pointer}
+button.ghost{background:#fff;color:var(--acc)}
+@media (prefers-color-scheme:dark){
+:root{--bg:#14171a;--fg:#eceff2;--mut:#9aa4ae;--line:#2b3138;--acc:#3fbf8f;--acc2:#1b2622;--warn:#ff9a6b}
+.card,input,select{background:#1a1e22}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tính tiền nhập hàng cho một đợt — Bảng tính cho quán nhỏ">
+<meta property="og:description" content="Tính tiền nhập hàng cho một đợt: nhập lượng bán mỗi ngày, số ngày bán và giá nhập là ra số lượng cần mua và tổng tiền phải chuẩn bị, có tính cả phần dự phòng hư hỏng.">
+<meta property="og:image" content="https://www.biz-vn.com/images/og/tai-lieu.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://bang-tinh-quan-nho.pages.dev/tien-nhap-hang">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bảng tính cho quán nhỏ">
+<meta name="twitter:image:alt" content="Bảng tính cho quán nhỏ">
+</head>
+<body>
+<div class="wrap">
+<nav><a href="./">Trang chủ</a> <a href="https://www.biz-vn.com/tai-lieu/">Tài liệu miễn phí cho chủ quán</a></nav>
+
+<h1>Tính tiền nhập hàng cho một đợt</h1>
+<p class="lead">Nhập lượng bán trung bình mỗi ngày, số ngày bán trong đợt và giá nhập một đơn vị, bảng tính ra số lượng cần mua và tổng tiền phải chuẩn bị. Không đăng ký, không lưu dữ liệu lên máy chủ.</p>
+
+<div class="card">
+  <label for="soLuong">Lượng bán trung bình mỗi ngày <span class="hint">số lượng bán được trong một ngày</span></label>
+  <input id="soLuong" type="text" inputmode="decimal" placeholder="30">
+
+  <div class="row">
+    <div>
+      <label for="soNgay">Số ngày bán trong đợt</label>
+      <input id="soNgay" type="text" inputmode="decimal" placeholder="7">
+    </div>
+    <div>
+      <label for="giaVon">Giá nhập một đơn vị (đ)</label>
+      <input id="giaVon" type="text" inputmode="decimal" placeholder="25000">
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label for="duPhong">Tỷ lệ dự phòng hư hỏng (%) <span class="hint">nhập 0 nếu không dự phòng</span></label>
+      <input id="duPhong" type="text" inputmode="decimal" placeholder="5">
+    </div>
+    <div>
+      <label for="donVi">Đơn vị tính</label>
+      <input id="donVi" type="text" placeholder="hộp">
+    </div>
+  </div>
+
+  <p style="margin-top:16px"><button type="button" id="tinh">Tính</button> <button type="button" class="ghost" id="xoa">Xoá số</button></p>
+  <p class="note">Đợt hàng thường kéo 7 ngày, nên số ngày mặc định là 7. Muốn xem cả phần dự phòng thì nhập tỷ lệ hư hỏng thật của quán, thường khoảng 3-5% với thực phẩm và đồ khô.</p>
+</div>
+
+<div id="ketQua" hidden>
+  <div class="out">
+    <div class="kv"><span>Số lượng cần nhập</span><b class="big" id="oLuongNhap">—</b></div>
+    <div class="kv"><span>Tổng tiền nhập hàng</span><b id="oTienNhap">—</b></div>
+    <div class="kv" style="margin-top:10px"><span>Trong đó tiền dự phòng hư hỏng</span><b id="oTienDuPhong">—</b></div>
+    <div class="kv"><span>Tiền nhập nếu không tính dự phòng</span><b id="oTienCan">—</b></div>
+  </div>
+  <p class="note" id="oLuuY"></p>
+</div>
+
+<h2>Đọc kết quả thế nào</h2>
+<p>Số tiền nhập hàng chính là số tiền bị nằm trong kho trong số ngày đó. Quán
+bán nhanh thì tiền nằm trong kho quay nhanh, quán bán chậm thì tiền nằm lâu
+hơn nên nhập ít vào mỗi đợt lại tốt hơn.</p>
+<p>Phần dự phòng là khoảng dự ra cho hư hỏng, thất lạc, hết hạn. Nhập dự phòng
+5% nghĩa là trong 1.000 đơn vị nhập vào thì có khoảng 50 đơn vị không bán được
+đầy đủ. Nếu quán bán hàng nhanh, cứ thử nhập 3% rồi so xem có đủ không.</p>
+<p>Nhớ chia tổng tiền nhập cho số ngày trong đợt để biết mỗi ngày quay vòng
+bao nhiêu tiền. Ví dụ đợt 5.250.000 đ bán trong 7 ngày là khoảng 750.000 đ
+mỗi ngày, so với tiền mặt trong két để xem có đủ xoay vòng không.</p>
+
+<h2>Bài hướng dẫn đi kèm</h2>
+<ul>
+  <li><a href="https://www.biz-vn.com/blog/chung/quan-ly-hang-nhap/">Quản lý hàng nhập cần lưu ý gì?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/chung/quan-ly-ton-kho/">Quản lý tồn kho thế nào cho chuẩn?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/cua-hang/quan-ly-ton-kho-cua-hang/">Quản lý tồn kho cửa hàng thế nào cho gọn?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/tap-hoa/quan-ly-ton-kho-tap-hoa/">Quản lý tồn kho tạp hóa giải quyết vấn đề gì?</a></li>
+</ul>
+
+<p><a href="gia-von.html">Tính giá vốn →</a> · <a href="./">Trang chủ</a></p>
+</div>
+
+<script src="calc.js"></script>
+<script>
+var T = TinhSao;
+function money(n){return T.money(n)}
+function pct(n){return T.pct(n)}
+function so(n){return n.toLocaleString('vi-VN',{maximumFractionDigits:1})}
+
+document.getElementById('tinh').addEventListener('click',function(){
+  var r = T.nhapHang({
+    soLuong: document.getElementById('soLuong').value,
+    soNgay: document.getElementById('soNgay').value,
+    giaVon: document.getElementById('giaVon').value,
+    duPhong: document.getElementById('duPhong').value
+  });
+  var kq=document.getElementById('ketQua');
+  var set=function(id,v,cls){var e=document.getElementById(id);e.textContent=v;if(cls!==undefined)e.className=cls;};
+  if(!r){
+    kq.hidden=false;
+    set('oLuongNhap','—','big');set('oTienNhap','—');set('oTienDuPhong','—');set('oTienCan','—');
+    document.getElementById('oLuuY').innerHTML='<b class="bad">Còn thiếu số.</b> Cần ít nhất lượng bán mỗi ngày và giá nhập một đơn vị.';
+    return;
+  }
+
+  var donVi=(document.getElementById('donVi').value||'').trim()||'đơn vị';
+  set('oLuongNhap',so(r.luongNhap)+' '+donVi,'big');
+  set('oTienNhap',money(r.tienNhap));
+  set('oTienDuPhong',money(r.tienDuPhong));
+  set('oTienCan',money(r.tienCan));
+
+  var luy;
+  if(r.duPhong===0){
+    luy='Bảng tính chưa tính phần dự phòng. Nhập tỷ lệ hư hỏng thật của quán thì mới biết cần mua dư lên bao nhiêu.';
+  }else{
+    luy='Nhập '+so(r.luongNhap)+' '+donVi+' để đủ bán '+r.soNgay+' ngày và còn '+pct(r.duPhong)+' dự phòng hư hỏng. Số tiền phải chuẩn bị là '+money(r.tienNhap)+', trong đó '+money(r.tienDuPhong)+' là phần dự phòng.';
+  }
+  document.getElementById('oLuuY').innerHTML=luy;
+  kq.hidden=false;
+});
+
+document.getElementById('xoa').addEventListener('click',function(){
+  ['soLuong','soNgay','giaVon','duPhong'].forEach(function(id){document.getElementById(id).value=''});
+  document.getElementById('ketQua').hidden=true;
+});
+</script>
+</body>
+</html>

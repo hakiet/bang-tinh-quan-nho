@@ -111,6 +111,31 @@
     };
   }
 
+  /* Tiền nhập hàng cho một đợt.
+     soLuong = lượng bán trung bình mỗi ngày; soNgay = số ngày bán trong đợt;
+     giaVon = giá nhập của một đơn vị; duPhong = tỷ lệ hư hỏng, mất mát (%). */
+  function nhapHang(o) {
+    var soLuong = num(o.soLuong);
+    var soNgay = num(o.soNgay) || 7;
+    var giaVon = num(o.giaVon);
+    var duPhong = num(o.duPhong);
+    if (soLuong <= 0 || giaVon <= 0) return null;
+    if (duPhong < 0) duPhong = 0; /* nhập âm là nhập nhầm */
+    var luongCan = soLuong * soNgay;
+    var tienCan = luongCan * giaVon;
+    var luongNhap = luongCan * (1 + duPhong / 100);
+    var tienNhap = luongNhap * giaVon;
+    return {
+      luongCan: luongCan,
+      tienCan: tienCan,
+      luongNhap: luongNhap,
+      tienNhap: tienNhap,
+      tienDuPhong: tienNhap - tienCan,
+      soNgay: soNgay,
+      duPhong: duPhong
+    };
+  }
+
   /* Tính một ca làm việc. Ca qua nửa đêm vẫn tính đúng. */
   function caLam(o) {
     var vao = o.vao || '';
@@ -145,5 +170,5 @@
     return n.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + '%';
   }
 
-  g.TinhSao = { num: num, giaVon: giaVon, laiGop: laiGop, hoaVon: hoaVon, hoaHong: hoaHong, caLam: caLam, money: money, pct: pct };
+  g.TinhSao = { num: num, giaVon: giaVon, laiGop: laiGop, hoaVon: hoaVon, hoaHong: hoaHong, nhapHang: nhapHang, caLam: caLam, money: money, pct: pct };
 })(typeof window !== 'undefined' ? window : globalThis);
