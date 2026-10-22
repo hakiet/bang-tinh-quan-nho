@@ -186,6 +186,37 @@
     };
   }
 
+  /* Lương nhân viên theo ca.
+     tienCongCa = tiền công một ca (đ); gioCa = số giờ trong một ca;
+     gioThem = số giờ làm thêm trong ca; tyLeThem = phần trăm trả cao hơn cho giờ thêm;
+     phuCapCa = phụ cấp mỗi ca (đ); soCa = số ca trong tháng;
+     doanhThu = doanh thu tháng (đ), dùng để ra tỷ lệ lương trên doanh thu. */
+  function luongTheoCa(o) {
+    var tienCongCa = num(o.tienCongCa);
+    var gioCa = num(o.gioCa);
+    var gioThem = num(o.gioThem);
+    var tyLeThem = num(o.tyLeThem);
+    var phuCapCa = num(o.phuCapCa);
+    var soCa = num(o.soCa);
+    var doanhThu = num(o.doanhThu);
+    if (tienCongCa <= 0 || gioCa <= 0) return null;
+    if (gioThem < 0) gioThem = 0;
+    if (tyLeThem < 0) tyLeThem = 0;
+    if (soCa < 0) soCa = 0;
+    var congGio = tienCongCa / gioCa;
+    var tienThem = congGio * gioThem * (1 + tyLeThem / 100);
+    var luongCa = tienCongCa + tienThem + phuCapCa;
+    var tongThang = luongCa * soCa;
+    return {
+      congGio: congGio,
+      tienThem: tienThem,
+      luongCa: luongCa,
+      tongThang: tongThang,
+      gioThang: (gioCa + gioThem) * soCa,
+      tyLeLuong: doanhThu > 0 ? tongThang / doanhThu * 100 : null
+    };
+  }
+
   function money(n) {
     return Math.round(n).toLocaleString('vi-VN') + ' đ';
   }
@@ -193,5 +224,5 @@
     return n.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + '%';
   }
 
-  g.TinhSao = { num: num, giaVon: giaVon, laiGop: laiGop, hoaVon: hoaVon, hoaHong: hoaHong, nhapHang: nhapHang, thueMatBang: thueMatBang, caLam: caLam, money: money, pct: pct };
+  g.TinhSao = { num: num, giaVon: giaVon, laiGop: laiGop, hoaVon: hoaVon, hoaHong: hoaHong, nhapHang: nhapHang, thueMatBang: thueMatBang, caLam: caLam, luongTheoCa: luongTheoCa, money: money, pct: pct };
 })(typeof window !== 'undefined' ? window : globalThis);

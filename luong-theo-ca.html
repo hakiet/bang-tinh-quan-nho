@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tính lương nhân viên theo ca — Bảng tính cho quán nhỏ</title>
+<meta name="description" content="Nhập tiền công một ca, số giờ trong ca, giờ làm thêm và số ca trong tháng để ra lương mỗi ca, tổng lương tháng và tỷ lệ lương trên doanh thu. Không đăng ký, không lưu dữ liệu.">
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#5b6470;--line:#e3e6ea;--acc:#0a6c4d;--acc2:#e8f4ef;--warn:#a3410f}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--fg);background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:1.5rem;line-height:1.3;margin:0 0 6px}
+h2{font-size:1.1rem;margin:28px 0 10px}
+p{margin:8px 0}
+ul{margin:8px 0;padding-left:20px}
+li{margin:4px 0}
+.lead{color:var(--mut);margin:0 0 20px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;background:#fff}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.92rem}
+.hint{font-weight:400;color:var(--mut);font-size:.84rem;margin-left:6px}
+input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;background:#fff;color:var(--fg);font-family:inherit}
+input:focus{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>div{flex:1 1 140px;min-width:120px}
+.out{border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:16px;background:var(--acc2)}
+.big{font-size:1.6rem;font-weight:700;color:var(--acc);margin:2px 0}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #fff}
+.kv:last-child{border-bottom:0}
+.kv b{font-variant-numeric:tabular-nums}
+.bad{color:var(--warn)}
+.good{color:var(--acc)}
+.note{font-size:.86rem;color:var(--mut);margin-top:10px}
+a{color:var(--acc)}
+nav a{margin-right:14px}
+button{font:inherit;padding:11px 16px;border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:8px;cursor:pointer}
+button.ghost{background:#fff;color:var(--acc)}
+@media (prefers-color-scheme:dark){
+:root{--bg:#14171a;--fg:#eceff2;--mut:#9aa4ae;--line:#2b3138;--acc:#3fbf8f;--acc2:#1b2622;--warn:#ff9a6b}
+.card,input{background:#1a1e22}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tính lương nhân viên theo ca — Bảng tính cho quán nhỏ">
+<meta property="og:description" content="Nhập tiền công một ca, số giờ trong ca, giờ làm thêm và số ca trong tháng để ra lương mỗi ca, tổng lương tháng và tỷ lệ lương trên doanh thu. Không đăng ký, không lưu dữ liệu.">
+<meta property="og:image" content="https://www.biz-vn.com/images/og/tai-lieu.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://bang-tinh-quan-nho.pages.dev/luong-theo-ca">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bảng tính cho quán nhỏ">
+<meta name="twitter:image:alt" content="Bảng tính cho quán nhỏ">
+</head>
+<body>
+<div class="wrap">
+<nav><a href="./">Trang chủ</a> <a href="https://www.biz-vn.com/tai-lieu/">Tài liệu miễn phí cho chủ quán</a></nav>
+
+<h1>Tính lương nhân viên theo ca</h1>
+<p class="lead">Nhập tiền công một ca, số giờ trong ca, giờ làm thêm và số ca trong tháng. Ra lương mỗi ca, tổng lương tháng, tổng giờ công và tỷ lệ lương trên doanh thu.</p>
+
+<div class="card">
+  <label for="tienCongCa">Tiền công một ca (đ)</label>
+  <input id="tienCongCa" type="text" inputmode="decimal" placeholder="Ví dụ: 120000">
+
+  <div class="row">
+    <div>
+      <label for="gioCa">Số giờ trong một ca</label>
+      <input id="gioCa" type="text" inputmode="decimal" value="8">
+    </div>
+    <div>
+      <label for="gioThem">Giờ làm thêm <span class="hint">trong ca</span></label>
+      <input id="gioThem" type="text" inputmode="decimal" placeholder="0">
+    </div>
+    <div>
+      <label for="tyLeThem">Trả thêm cho giờ thêm (%)</label>
+      <input id="tyLeThem" type="text" inputmode="decimal" value="50">
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label for="phuCapCa">Phụ cấp mỗi ca (đ)</label>
+      <input id="phuCapCa" type="text" inputmode="decimal" placeholder="0">
+    </div>
+    <div>
+      <label for="soCa">Số ca trong tháng</label>
+      <input id="soCa" type="text" inputmode="numeric" value="26">
+    </div>
+  </div>
+
+  <label for="doanhThu">Doanh thu tháng (đ) <span class="hint">để ra tỷ lệ lương trên doanh thu</span></label>
+  <input id="doanhThu" type="text" inputmode="decimal" placeholder="Ví dụ: 45000000">
+
+  <p style="margin-top:16px"><button type="button" id="tinh">Tính lương</button> <button type="button" class="ghost" id="xoa">Xoá</button></p>
+  <p class="note">Số giờ trong ca, tỷ lệ trả thêm và số ca trong tháng chỉ là chỗ bắt đầu, sửa lại theo quán của bạn.</p>
+</div>
+
+<div id="ketQua" hidden>
+  <div class="out">
+    <div class="kv"><span>Lương một ca</span><b class="big" id="oLuongCa">—</b></div>
+    <div class="kv"><span>Tổng lương tháng</span><b id="oTongThang">—</b></div>
+    <div class="kv"><span>Tiền công mỗi giờ</span><b id="oCongGio">—</b></div>
+    <div class="kv"><span>Tổng giờ công tháng</span><b id="oGioThang">—</b></div>
+    <div class="kv"><span>Lương trên doanh thu</span><b id="oTyLe">—</b></div>
+  </div>
+  <p class="note" id="oLuuY"></p>
+</div>
+
+<h2>Đọc kết quả thế nào</h2>
+<p>Lương mỗi ca là tiền công một ca, cộng tiền giờ làm thêm, cộng phụ cấp. Nhân với số ca
+trong tháng là ra tổng lương. Muốn so xem ca nào đang ăn vào lãi thì bấm
+<a href="cham-cong.html">chấm giờ ca</a> để xem tiền lương trên doanh thu của từng ca.</p>
+<p class="note">Tỷ lệ lương trên doanh thu chỉ có nghĩa khi doanh thu bạn nhập là của
+cả quán. Nếu một người bán chỉ lo một phần quần thì lấy doanh thu phần đó.</p>
+
+<h2>Bài hướng dẫn đi kèm</h2>
+<ul>
+  <li><a href="https://www.biz-vn.com/blog/chung/cham-cong-nhan-vien/">Chấm công nhân viên bằng cách nào cho công bằng?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/chung/tinh-luong-nhan-vien-theo-ca/">Tính lương nhân viên theo ca thế nào cho chuẩn?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/cua-hang/xep-lich-lam-viec-nhan-vien-cua-hang/">Xếp lịch nhân viên cửa hàng không thiếu người giờ đông?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/chung/quan-so-nhan-vien-vua-du/">Một cửa hàng cần bao nhiêu nhân viên là vừa đủ?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/tap-hoa/xep-ca-trong-tap-hoa-dong-khach/">Xếp ca trông tiệm tạp hóa thế nào để giờ đông không thiếu người?</a></li>
+</ul>
+
+<p><a href="cham-cong.html">← Chấm giờ ca</a> · <a href="hoa-hong.html">Tính hoa hồng →</a></p>
+</div>
+
+<script src="calc.js"></script>
+<script>
+var T = TinhSao;
+
+function tinhLuong(){
+  var r = T.luongTheoCa({
+    tienCongCa: document.getElementById('tienCongCa').value,
+    gioCa: document.getElementById('gioCa').value,
+    gioThem: document.getElementById('gioThem').value,
+    tyLeThem: document.getElementById('tyLeThem').value,
+    phuCapCa: document.getElementById('phuCapCa').value,
+    soCa: document.getElementById('soCa').value,
+    doanhThu: document.getElementById('doanhThu').value
+  });
+  var kq = document.getElementById('ketQua');
+  var set = function(id, v, cls){ var e = document.getElementById(id); e.textContent = v; if (cls !== undefined) e.className = cls; };
+  if (!r) {
+    kq.hidden = false;
+    set('oLuongCa', '—'); set('oTongThang', '—'); set('oCongGio', '—'); set('oGioThang', '—'); set('oTyLe', '—');
+    document.getElementById('oLuuY').innerHTML = '<b class="bad">Thiếu tiền công một ca, hoặc số giờ trong ca bằng 0.</b>';
+    return;
+  }
+  set('oLuongCa', T.money(r.luongCa));
+  set('oTongThang', r.tongThang > 0 ? T.money(r.tongThang) : '—');
+  set('oCongGio', T.money(r.congGio));
+  set('oGioThang', r.gioThang > 0 ? r.gioThang.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' giờ' : '—');
+  set('oTyLe', r.tyLeLuong === null ? '—' : T.pct(r.tyLeLuong), r.tyLeLuong === null ? '' : (r.tyLeLuong > 30 ? 'bad' : 'good'));
+
+  var luy;
+  if (r.tongThang <= 0) {
+    luy = 'Đã tính lương một ca. Nhập số ca trong tháng để ra tổng lương.';
+  } else if (r.tyLeLuong === null) {
+    luy = 'Tổng lương tháng ' + T.money(r.tongThang) + '. Nhập doanh thu tháng để so lương với doanh thu.';
+  } else if (r.tyLeLuong > 30) {
+    luy = '<b class="bad">Lương ăn trên 30% doanh thu.</b> Xem lại số ca và giờ làm thêm trước khi chốt tháng.';
+  } else {
+    luy = 'Lương ăn ' + T.pct(r.tyLeLuong) + ' doanh thu. Ghi con số này lại để so với tháng sau.';
+  }
+  document.getElementById('oLuuY').innerHTML = luy;
+  kq.hidden = false;
+}
+
+document.getElementById('tinh').addEventListener('click', tinhLuong);
+
+document.getElementById('xoa').addEventListener('click', function(){
+  document.getElementById('tienCongCa').value = '';
+  document.getElementById('gioCa').value = '8';
+  document.getElementById('gioThem').value = '';
+  document.getElementById('tyLeThem').value = '50';
+  document.getElementById('phuCapCa').value = '';
+  document.getElementById('soCa').value = '26';
+  document.getElementById('doanhThu').value = '';
+  document.getElementById('ketQua').hidden = true;
+});
+</script>
+</body>
+</html>
