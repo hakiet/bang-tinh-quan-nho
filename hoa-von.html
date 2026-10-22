@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tính điểm hòa vốn — Bảng tính cho quán nhỏ</title>
+<meta name="description" content="Tính số phần phải bán để hòa vốn, doanh thu hòa vốn và số lượng phần cần bán thêm mỗi ngày. Không đăng ký, không lưu dữ liệu.">
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#5b6470;--line:#e3e6ea;--acc:#0a6c4d;--acc2:#e8f4ef;--warn:#a3410f}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--fg);background:var(--bg)}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:1.5rem;line-height:1.3;margin:0 0 6px}
+h2{font-size:1.1rem;margin:28px 0 10px}
+p{margin:8px 0}
+ul{margin:8px 0;padding-left:20px}
+li{margin:4px 0}
+.lead{color:var(--mut);margin:0 0 20px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;background:#fff}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.92rem}
+.hint{font-weight:400;color:var(--mut);font-size:.84rem;margin-left:6px}
+input,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;background:#fff;color:var(--fg);font-family:inherit}
+input:focus,select:focus{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>div{flex:1 1 160px;min-width:140px}
+.out{border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:16px;background:var(--acc2)}
+.big{font-size:1.6rem;font-weight:700;color:var(--acc);margin:2px 0}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #fff}
+.kv:last-child{border-bottom:0}
+.kv b{font-variant-numeric:tabular-nums}
+.bad{color:var(--warn)}
+.good{color:var(--acc)}
+.note{font-size:.86rem;color:var(--mut);margin-top:10px}
+a{color:var(--acc)}
+nav a{margin-right:14px}
+button{font:inherit;padding:11px 16px;border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:8px;cursor:pointer}
+button.ghost{background:#fff;color:var(--acc)}
+@media (prefers-color-scheme:dark){
+:root{--bg:#14171a;--fg:#eceff2;--mut:#9aa4ae;--line:#2b3138;--acc:#3fbf8f;--acc2:#1b2622;--warn:#ff9a6b}
+.card,input,select{background:#1a1e22}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tính điểm hòa vốn — Bảng tính cho quán nhỏ">
+<meta property="og:description" content="Tính số phần phải bán để hòa vốn, doanh thu hòa vốn và số lượng phần cần bán thêm mỗi ngày. Không đăng ký, không lưu dữ liệu.">
+<meta property="og:image" content="https://www.biz-vn.com/images/og/tai-lieu.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://bang-tinh-quan-nho.pages.dev/hoa-von">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bảng tính cho quán nhỏ">
+<meta name="twitter:image:alt" content="Bảng tính cho quán nhỏ">
+</head>
+<body>
+<div class="wrap">
+<nav><a href="./">Trang chủ</a> <a href="https://www.biz-vn.com/tai-lieu/">Tài liệu miễn phí cho chủ quán</a></nav>
+
+<h1>Tính điểm hòa vốn</h1>
+<p class="lead">Nhập chi phí cố định và giá bán, xem quán cần bán bao nhiêu phần mới hoàn vốn trong tháng. Không đăng ký, không lưu dữ liệu lên máy chủ.</p>
+
+<div class="card">
+  <label for="chiPhiCoDinh">Chi phí cố định trong tháng (đ) <span class="hint">mặt bằng, lương, điện nước — không đổi theo số hàng bán</span></label>
+  <input id="chiPhiCoDinh" type="text" inputmode="decimal" placeholder="25000000">
+
+  <div class="row">
+    <div>
+      <label for="giaBan">Giá bán trung bình mỗi phần (đ)</label>
+      <input id="giaBan" type="text" inputmode="decimal" placeholder="25000">
+    </div>
+    <div>
+      <label for="chiPhiBienDinh">Chi phí mỗi phần (đ) <span class="hint">nguyên liệu, đóng hộp, hoa hồng</span></label>
+      <input id="chiPhiBienDinh" type="text" inputmode="decimal" placeholder="7000">
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label for="banMoiNgay">Số phần bán được mỗi ngày</label>
+      <input id="banMoiNgay" type="text" inputmode="decimal" placeholder="60">
+    </div>
+    <div>
+      <label for="soNgayBan">Số ngày bán trong tháng</label>
+      <input id="soNgayBan" type="text" inputmode="numeric" placeholder="30">
+    </div>
+  </div>
+
+  <p style="margin-top:16px"><button type="button" id="tinh">Tính</button> <button type="button" class="ghost" id="xoa">Xoá số</button></p>
+  <p class="note">Chi phí mỗi phần lấy từ bảng tính giá vốn: nếu bán cà phê sữa đá giá 25.000 đ mà chi phí nguyên liệu là 7.000 đ thì điền 7.000. Nhập 0 nếu chưa tính được.</p>
+</div>
+
+<div id="ketQua" hidden>
+  <div class="out">
+    <div class="kv"><span>Lãi gộp mỗi phần</span><b class="big" id="oLai">—</b></div>
+    <div class="kv"><span>Số phần cần bán để hòa vốn trong tháng</span><b id="oSoPhan">—</b></div>
+    <div class="kv"><span>Doanh thu hòa vốn trong tháng</span><b id="oDoanhThu">—</b></div>
+    <div class="kv" style="margin-top:10px"><span>Cần bán mỗi ngày</span><b id="oCanMoiNgay">—</b></div>
+    <div class="kv"><span>Hiện đang bán mỗi ngày</span><b id="oBanMoiNgay">—</b></div>
+    <div class="kv"><span>Cần bán thêm mỗi ngày</span><b id="oThieu">—</b></div>
+  </div>
+  <p class="note" id="oLuuY"></p>
+</div>
+
+<h2>Đọc kết quả thế nào</h2>
+<p>Điểm hòa vốn là số phần bán tối thiểu để thu được đủ chi phí cố định, tức
+là tháng đó không lỗ cũng không lãi. Bán dưới mức đó thì mỗi ngày đang bù lỗ
+một ít.</p>
+<p>Điểm hòa vốn không nói lên quán có lãi hay không. Muốn có lãi thì phải bán
+vượt mức đó, và mức vượt càng nhiều càng tốt. Vì vậy khi mở thêm chi nhánh,
+tính lại từ đầu: chi phí cố định tăng thì điểm hòa vốn cũng tăng theo.</p>
+<p class="note">Nếu số phần bán mỗi ngày đang thấp hơn mức cần, đừng vội kết luận
+quán hỏng. Có thể giá bán chưa đúng, chưa bán món dễ bán, hoặc chi phí cố định
+đang nặng vì mở rộng hơn sức bán.</p>
+
+<h2>Bài hướng dẫn đi kèm</h2>
+<ul>
+  <li><a href="https://www.biz-vn.com/blog/chung/tinh-loi-nhuan/">Tính lợi nhuận bán hàng sao cho chuẩn?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/cua-hang/mo-rong-chi-nhanh-thu-hai-khi-nao/">Mở chi nhánh thứ hai khi nào là hợp lý?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/chung/so-sanh-mo-rong-quan-va-mo-them-chi-nhanh/">Mở rộng quán cũ và mở thêm chi nhánh mới cái nào an toàn hơn?</a></li>
+</ul>
+
+<p><a href="lai-gop.html">Tính lãi gộp cả quán →</a> · <a href="./">Trang chủ</a></p>
+</div>
+
+<script src="calc.js"></script>
+<script>
+var T = TinhSao;
+function money(n){return T.money(n)}
+function so(n){return Math.ceil(n).toLocaleString('vi-VN')+' phần'}
+
+document.getElementById('tinh').addEventListener('click',function(){
+  var r = T.hoaVon({
+    chiPhiCoDinh: document.getElementById('chiPhiCoDinh').value,
+    giaBan: document.getElementById('giaBan').value,
+    chiPhiBienDinh: document.getElementById('chiPhiBienDinh').value,
+    banMoiNgay: document.getElementById('banMoiNgay').value,
+    soNgayBan: document.getElementById('soNgayBan').value
+  });
+  var kq=document.getElementById('ketQua');
+  var set=function(id,v,cls){var e=document.getElementById(id);e.textContent=v;if(cls!==undefined)e.className=cls;};
+  if(!r){
+    kq.hidden=false;
+    set('oLai','—','big');set('oSoPhan','—');set('oDoanhThu','—');set('oCanMoiNgay','—');set('oBanMoiNgay','—');set('oThieu','—');
+    document.getElementById('oLuuY').innerHTML='<b class="bad">Còn thiếu số.</b> Cần ít nhất giá bán mỗi phần, và giá bán phải lớn hơn chi phí mỗi phần.';
+    return;
+  }
+
+  set('oLai',money(r.lai),'big '+(r.lai>0?'good':'bad'));
+  set('oSoPhan',so(r.soPhan));
+  set('oDoanhThu',money(r.doanhThu));
+  set('oCanMoiNgay',so(r.canMoiNgay));
+  set('oBanMoiNgay',r.banMoiNgay>0?so(r.banMoiNgay):'chưa nhập');
+  set('oThieu',r.canThemPhanMoiNgay>0?so(r.canThemPhanMoiNgay):'không cần bán thêm',r.canThemPhanMoiNgay>0?'bad':'good');
+
+  var luy;
+  if(r.banMoiNgay<=0){
+    luy='Bạn chưa nhập số phần bán mỗi ngày, nên chưa so được với mức cần. Mức cần là '+so(r.canMoiNgay)+' mỗi ngày trong '+r.soNgay+' ngày.';
+  }else if(r.canThemPhanMoiNgay>0){
+    luy='Hiện bán '+so(r.banMoiNgay)+' mỗi ngày, còn thiếu '+so(r.canThemPhanMoiNgay)+' để hòa vốn trong tháng. Thiếu đúng bằng lúc nào bán được nhiều hơn — đó là bài toán vận hành, không phải bài toán giá.';
+  }else{
+    luy='Bạn đang bán vượt mức hòa vốn '+so(r.canMoiNgay - r.banMoiNgay)+' mỗi ngày. Nghĩa là mỗi tháng phần vượt đó là lợi nhuận gộp của quán. Giữ nguyên công thức và tăng lên từ từ.';
+  }
+  document.getElementById('oLuuY').innerHTML=luy;
+  kq.hidden=false;
+});
+
+document.getElementById('xoa').addEventListener('click',function(){
+  ['chiPhiCoDinh','giaBan','chiPhiBienDinh','banMoiNgay'].forEach(function(id){document.getElementById(id).value=''});
+  document.getElementById('soNgayBan').value='30';
+  document.getElementById('ketQua').hidden=true;
+});
+</script>
+</body>
+</html>

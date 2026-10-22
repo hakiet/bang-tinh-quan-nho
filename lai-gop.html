@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tính lãi gộp cả quán — Bảng tính cho quán nhỏ</title>
+<meta name="description" content="Tính lãi gộp, tỷ lệ lãi gộp và lợi nhuận ròng của cả quán trong một tháng. Không đăng ký, không lưu dữ liệu.">
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#5b6470;--line:#e3e6ea;--acc:#0a6c4d;--acc2:#e8f4ef;--warn:#a3410f}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--fg);background:var(--bg)}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:1.5rem;line-height:1.3;margin:0 0 6px}
+h2{font-size:1.1rem;margin:28px 0 10px}
+p{margin:8px 0}
+ul{margin:8px 0;padding-left:20px}
+li{margin:4px 0}
+.lead{color:var(--mut);margin:0 0 20px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;background:#fff}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.92rem}
+.hint{font-weight:400;color:var(--mut);font-size:.84rem;margin-left:6px}
+input,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;background:#fff;color:var(--fg);font-family:inherit}
+input:focus,select:focus{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>div{flex:1 1 160px;min-width:140px}
+.out{border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:16px;background:var(--acc2)}
+.big{font-size:1.6rem;font-weight:700;color:var(--acc);margin:2px 0}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #fff}
+.kv:last-child{border-bottom:0}
+.kv b{font-variant-numeric:tabular-nums}
+.bad{color:var(--warn)}
+.good{color:var(--acc)}
+.note{font-size:.86rem;color:var(--mut);margin-top:10px}
+a{color:var(--acc)}
+nav a{margin-right:14px}
+button{font:inherit;padding:11px 16px;border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:8px;cursor:pointer}
+button.ghost{background:#fff;color:var(--acc)}
+.bar{height:10px;background:#fff;border-radius:5px;overflow:hidden;margin-top:8px;border:1px solid var(--line)}
+.bar>i{display:block;height:100%;background:var(--acc)}
+@media (prefers-color-scheme:dark){
+:root{--bg:#14171a;--fg:#eceff2;--mut:#9aa4ae;--line:#2b3138;--acc:#3fbf8f;--acc2:#1b2622;--warn:#ff9a6b}
+.card,input,select{background:#1a1e22}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tính lãi gộp cả quán — Bảng tính cho quán nhỏ">
+<meta property="og:description" content="Tính lãi gộp, tỷ lệ lãi gộp và lợi nhuận ròng của cả quán trong một tháng. Không đăng ký, không lưu dữ liệu.">
+<meta property="og:image" content="https://www.biz-vn.com/images/og/tai-lieu.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://bang-tinh-quan-nho.pages.dev/lai-gop">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bảng tính cho quán nhỏ">
+<meta name="twitter:image:alt" content="Bảng tính cho quán nhỏ">
+</head>
+<body>
+<div class="wrap">
+<nav><a href="./">Trang chủ</a> <a href="https://www.biz-vn.com/tai-lieu/">Tài liệu miễn phí cho chủ quán</a></nav>
+
+<h1>Tính lãi gộp cả quán</h1>
+<p class="lead">Nhập doanh thu tháng vừa rồi, xem quán lãi gộp bao nhiêu và còn lại bao nhiêu sau khi trừ chi phí cố định. Không đăng ký, không lưu dữ liệu lên máy chủ.</p>
+
+<div class="card">
+  <label for="doanhThu">Doanh thu tháng vừa rồi (đ) <span class="hint">tiền bán ra trong tháng</span></label>
+  <input id="doanhThu" type="text" inputmode="decimal" placeholder="80000000">
+
+  <label for="giaVon">Tổng giá vốn hàng đã bán (đ) <span class="hint">tiền mua hàng bán ra trong tháng</span></label>
+  <input id="giaVon" type="text" inputmode="decimal" placeholder="45000000">
+
+  <label for="chiPhiBienDinh">Chi phí đi theo số hàng bán (đ) <span class="hint">hoa hồng, đóng hộp, giao hàng, giặt là nhiều</span></label>
+  <input id="chiPhiBienDinh" type="text" inputmode="decimal" placeholder="4000000">
+
+  <label for="chiPhiCoDinh">Chi phí cố định trong tháng (đ) <span class="hint">mặt bằng, lương, điện nước — không đổi theo số hàng bán</span></label>
+  <input id="chiPhiCoDinh" type="text" inputmode="decimal" placeholder="25000000">
+
+  <p style="margin-top:16px"><button type="button" id="tinh">Tính</button> <button type="button" class="ghost" id="xoa">Xoá số</button></p>
+  <p class="note">Chia chi phí thành hai phần là điểm mấu chốt. Chi phí tăng theo số hàng bán thì trừ vào lãi gộp; chi phí không đổi dù bán ít hay bán nhiều thì trừ sau, thành lợi nhuận ròng. Nếu chưa tách được thì tạm để chi phí biến động bằng 0 và xem lại sau.</p>
+</div>
+
+<div id="ketQua" hidden>
+  <div class="out">
+    <div class="kv"><span>Lãi gộp trong tháng</span><b class="big" id="oLaiGop">—</b></div>
+    <div class="kv"><span>Tỷ lệ lãi gộp</span><b id="oTyLeLai">—</b></div>
+    <div class="bar"><i id="oBar" style="width:0%"></i></div>
+    <div class="kv" style="margin-top:10px"><span>Tổng chi phí đã tính</span><b id="oVon">—</b></div>
+    <div class="kv"><span>Lợi nhuận ròng (sau chi phí cố định)</span><b id="oLoiNhuan">—</b></div>
+    <div class="kv"><span>Tỷ lệ lợi nhuận ròng</span><b id="oTyLeLoi">—</b></div>
+  </div>
+  <p class="note" id="oLuuY"></p>
+</div>
+
+<h2>Đọc kết quả thế nào</h2>
+<p>Lãi gộp là số tiền còn lại sau khi trừ giá vốn và chi phí đi theo số hàng bán.
+Đây là phần quán dùng để trả mặt bằng, lương, điện nước và còn lại cho chủ quán.
+Tỷ lệ lãi gộp thấp dù bán nhiều cũng không giúp ích nhiều, vì chi phí cố định
+vẫn phải trả đủ mỗi tháng.</p>
+<p>Lợi nhuận ròng là phần còn lại thật. Nếu lãi gộp dương mà lợi nhuận ròng âm,
+chuyện không phải bán ít mà là chi phí cố định đang nặng hơn sức bán. Xử vào
+giá bán, vào giá vốn, hoặc giảm chi phí cố định — chứ không phải cắt giảm
+chất lượng.</p>
+<p class="note">So sánh cùng kỳ tháng trước với chính mình. Quán nào cũng vậy,
+chứ đừng so với quán khác vì mỗi quán một giá thuê mặt bằng.</p>
+
+<h2>Bài hướng dẫn đi kèm</h2>
+<ul>
+  <li><a href="https://www.biz-vn.com/blog/chung/tinh-loi-nhuan/">Tính lợi nhuận bán hàng sao cho chuẩn?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/chung/tinh-gia-von-that-cho-mon-hang-dung-de-lai-ao/">Tính giá vốn thật cho một món hàng: đừng để lãi ảo</a></li>
+  <li><a href="https://www.biz-vn.com/blog/chung/bao-cao-doanh-thu/">Báo cáo doanh thu xem thế nào cho đúng?</a></li>
+</ul>
+
+<p><a href="hoa-von.html">Tính điểm hòa vốn →</a> · <a href="./">Trang chủ</a></p>
+</div>
+
+<script src="calc.js"></script>
+<script>
+var T = TinhSao;
+function money(n){return T.money(n)}
+function pct(n){return T.pct(n)}
+
+document.getElementById('tinh').addEventListener('click',function(){
+  var r = T.laiGop({
+    doanhThu: document.getElementById('doanhThu').value,
+    giaVon: document.getElementById('giaVon').value,
+    chiPhiBienDinh: document.getElementById('chiPhiBienDinh').value,
+    chiPhiCoDinh: document.getElementById('chiPhiCoDinh').value
+  });
+  var kq=document.getElementById('ketQua');
+  var set=function(id,v,cls){var e=document.getElementById(id);e.textContent=v;if(cls!==undefined)e.className=cls;};
+  if(!r){
+    kq.hidden=false;
+    document.getElementById('oBar').style.width='0%';
+    set('oLaiGop','—','big');set('oTyLeLai','—');set('oVon','—');set('oLoiNhuan','—');set('oTyLeLoi','—');
+    document.getElementById('oLuuY').innerHTML='<b class="bad">Còn thiếu số.</b> Cần ít nhất doanh thu trong tháng.';
+    return;
+  }
+
+  set('oVon',money(r.von + r.coDinh));
+  set('oLaiGop',money(r.lai),'big '+(r.lai>=0?'good':'bad'));
+  set('oTyLeLai',pct(r.tyLeLai),r.tyLeLai>=0?'good':'bad');
+  document.getElementById('oBar').style.width=Math.max(0,Math.min(100,r.tyLeLai))+'%';
+  set('oLoiNhuan',money(r.loiNhuan),r.loiNhuan>=0?'good':'bad');
+  set('oTyLeLoi',pct(r.tyLeLoi),r.loiNhuan>=0?'good':'bad');
+
+  var luy;
+  if(r.loiNhuan<0){
+    luy='<b class="bad">Tháng vừa rồi lỗ.</b> Lãi gộp '+(r.lai>=0?('đủ '+money(r.lai)+' nhưng chưa bù được chi phí cố định '+money(r.coDinh)+', thiếu '+money(-r.loiNhuan)+'.'):('đang âm '+money(-r.lai)+' ngay từ hàng bán ra.'))+' Xử vào giá bán, giá vốn hoặc chi phí cố định trước khi bán thêm.';
+  }else if(r.tyLeLai<20){
+    luy='Lãi gộp vẫn dương nhưng mỏng ('+pct(r.tyLeLai)+'). Mỗi phần bán thêm chỉ mang về ít tiền, nên nâng giá hoặc giảm giá vốn sẽ ăn vào lãi nhiều hơn là bán thêm lượng.';
+  }else{
+    luy='Lãi gộp khoẻ ('+pct(r.tyLeLai)+'). Giữ nguyên công thức, đừng nới lỏng giá vốn khi hàng nhập đắt lên.';
+  }
+  document.getElementById('oLuuY').innerHTML=luy;
+  kq.hidden=false;
+});
+
+document.getElementById('xoa').addEventListener('click',function(){
+  ['doanhThu','giaVon','chiPhiBienDinh','chiPhiCoDinh'].forEach(function(id){document.getElementById(id).value=''});
+  document.getElementById('ketQua').hidden=true;
+});
+</script>
+</body>
+</html>

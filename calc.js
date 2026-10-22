@@ -1,4 +1,4 @@
-/* Các phép tính dùng chung cho 3 công cụ. Tách ra để kiểm thử được. */
+/* Các phép tính dùng chung cho các công cụ. Tách ra để kiểm thử được. */
 (function (g) {
   'use strict';
 
@@ -38,6 +38,56 @@
     };
   }
 
+  /* Lãi gộp của cả quán trong một tháng.
+     doanhThu = tiền bán ra; giaVon = tiền mua hàng đã bán;
+     chiPhiBienDinh = hoa hồng, đóng hộp, giao hàng (tăng theo số hàng bán);
+     chiPhiCoDinh = mặt bằng, lương, điện nước (không đổi theo số hàng bán). */
+  function laiGop(o) {
+    var doanhThu = num(o.doanhThu);
+    var giaVon = num(o.giaVon);
+    var bienDinh = num(o.chiPhiBienDinh);
+    var coDinh = num(o.chiPhiCoDinh);
+    if (doanhThu <= 0) return null;
+    var von = giaVon + bienDinh;
+    var lai = doanhThu - von;
+    var loiNhuan = lai - coDinh;
+    return {
+      von: von,
+      lai: lai,
+      tyLeLai: lai / doanhThu * 100,
+      loiNhuan: loiNhuan,
+      tyLeLoi: loiNhuan / doanhThu * 100,
+      coDinh: coDinh
+    };
+  }
+
+  /* Điểm hòa vốn trong kỳ: số phần phải bán để bù hết chi phí cố định.
+     giaBan - chiPhiBienDinh = lãi gộp mỗi phần. */
+  function hoaVon(o) {
+    var coDinh = num(o.chiPhiCoDinh);
+    var giaBan = num(o.giaBan);
+    var bienDinh = num(o.chiPhiBienDinh);
+    var banNgay = num(o.banMoiNgay);
+    var soNgay = num(o.soNgayBan) || 30;
+    if (giaBan <= 0) return null;
+    var lai = giaBan - bienDinh;
+    if (lai <= 0) return null;
+    var soPhan = coDinh / lai;
+    var doanhThu = soPhan * giaBan;
+    var canMoiNgay = soPhan / soNgay;
+    var thieu = banNgay > 0 ? canMoiNgay - banNgay : null;
+    return {
+      lai: lai,
+      soPhan: soPhan,
+      doanhThu: doanhThu,
+      soNgay: soNgay,
+      canMoiNgay: canMoiNgay,
+      banMoiNgay: banNgay,
+      thieuPhanMoiNgay: thieu,
+      canThemPhanMoiNgay: thieu !== null && thieu > 0 ? thieu : 0
+    };
+  }
+
   /* Tính một ca làm việc. Ca qua nửa đêm vẫn tính đúng. */
   function caLam(o) {
     var vao = o.vao || '';
@@ -72,5 +122,5 @@
     return n.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + '%';
   }
 
-  g.TinhSao = { num: num, giaVon: giaVon, caLam: caLam, money: money, pct: pct };
+  g.TinhSao = { num: num, giaVon: giaVon, laiGop: laiGop, hoaVon: hoaVon, caLam: caLam, money: money, pct: pct };
 })(typeof window !== 'undefined' ? window : globalThis);
