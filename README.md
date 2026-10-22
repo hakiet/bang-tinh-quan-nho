@@ -1,17 +1,18 @@
 # Bảng tính cho quán nhỏ
 
-Năm trang tĩnh, không máy chủ, không cơ sở dữ liệu, không đăng ký người dùng.
+Sáu trang tĩnh, không máy chủ, không cơ sở dữ liệu, không đăng ký người dùng.
 Mở là chạy, dữ liệu chỉ nằm trong trình duyệt.
 
 | Trang | Việc |
 |---|---|
-| `index.html` | Trang chủ, giới thiệu 5 công cụ |
+| `index.html` | Trang chủ, giới thiệu 6 công cụ |
 | `gia-von.html` | Tính giá vốn, lãi gộp, tỷ lệ lãi của một phần món |
 | `lai-gop.html` | Tính lãi gộp, tỷ lệ lãi gộp và lợi nhuận ròng của cả tháng |
 | `hoa-von.html` | Tính số phần hòa vốn, doanh thu hòa vốn, phần cần bán thêm mỗi ngày |
+| `hoa-hong.html` | Tính tiền hoa hồng theo tỷ lệ doanh thu, so với lương cứng |
 | `cham-cong.html` | Chấm giờ ca, tiền công, doanh thu trên giờ công, so sánh các ca |
 | `bien-nhan-giat.html` | Mẫu biên nhận giặt, in ra hoặc chép vào sổ |
-| `404.html` | Trang không tìm thấy, có link về 5 công cụ |
+| `404.html` | Trang không tìm thấy, có link về 6 công cụ |
 
 Giá và định lượng nhập vào đều là số thường: `60.000`, `0,018`, `25.000`. Chấm
 đồng vạch là phân cách nghìn, dấu phẩy là dấu thập phân.

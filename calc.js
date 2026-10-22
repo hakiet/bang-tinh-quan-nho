@@ -88,6 +88,29 @@
     };
   }
 
+  /* Hoa hồng theo doanh thu, và mức lương cứng tương đương.
+     doanhThu = doanh thu của riêng người bán trong tháng;
+     tyLe = tỷ lệ hoa hồng (%);
+     luongCu = lương cứng mỗi tháng (đ), dùng để quy đổi ngược. */
+  function hoaHong(o) {
+    var doanhThu = num(o.doanhThu);
+    var tyLe = num(o.tyLe);
+    var luongCu = num(o.luongCu);
+    if (doanhThu <= 0) return null;
+    if (tyLe < 0) tyLe = 0; /* nhập âm là nhập nhầm */
+    var tien = doanhThu * tyLe / 100;
+    var tuongDuong = luongCu > 0 ? luongCu / doanhThu * 100 : null;
+    return {
+      doanhThu: doanhThu,
+      tyLe: tyLe,
+      tien: tien,
+      luongCu: luongCu,
+      tongThuNhap: tien + luongCu,
+      tyLeTuongDuong: tuongDuong,
+      chenhLech: tuongDuong === null ? null : tuongDuong - tyLe
+    };
+  }
+
   /* Tính một ca làm việc. Ca qua nửa đêm vẫn tính đúng. */
   function caLam(o) {
     var vao = o.vao || '';
@@ -122,5 +145,5 @@
     return n.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + '%';
   }
 
-  g.TinhSao = { num: num, giaVon: giaVon, laiGop: laiGop, hoaVon: hoaVon, caLam: caLam, money: money, pct: pct };
+  g.TinhSao = { num: num, giaVon: giaVon, laiGop: laiGop, hoaVon: hoaVon, hoaHong: hoaHong, caLam: caLam, money: money, pct: pct };
 })(typeof window !== 'undefined' ? window : globalThis);

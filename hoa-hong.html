@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tính hoa hồng nhân viên theo doanh thu — Bảng tính cho quán nhỏ</title>
+<meta name="description" content="Tính tiền hoa hồng theo tỷ lệ doanh thu và so với lương cứng, xem cách trả lương nào hợp hơn với quán. Không đăng ký, không lưu dữ liệu.">
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#5b6470;--line:#e3e6ea;--acc:#0a6c4d;--acc2:#e8f4ef;--warn:#a3410f}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--fg);background:var(--bg)}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:1.5rem;line-height:1.3;margin:0 0 6px}
+h2{font-size:1.1rem;margin:28px 0 10px}
+p{margin:8px 0}
+ul{margin:8px 0;padding-left:20px}
+li{margin:4px 0}
+.lead{color:var(--mut);margin:0 0 20px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;background:#fff}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.92rem}
+.hint{font-weight:400;color:var(--mut);font-size:.84rem;margin-left:6px}
+input,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;background:#fff;color:var(--fg);font-family:inherit}
+input:focus,select:focus{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>div{flex:1 1 160px;min-width:140px}
+.out{border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:16px;background:var(--acc2)}
+.big{font-size:1.6rem;font-weight:700;color:var(--acc);margin:2px 0}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #fff}
+.kv:last-child{border-bottom:0}
+.kv b{font-variant-numeric:tabular-nums}
+.bad{color:var(--warn)}
+.good{color:var(--acc)}
+.note{font-size:.86rem;color:var(--mut);margin-top:10px}
+a{color:var(--acc)}
+nav a{margin-right:14px}
+button{font:inherit;padding:11px 16px;border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:8px;cursor:pointer}
+button.ghost{background:#fff;color:var(--acc)}
+@media (prefers-color-scheme:dark){
+:root{--bg:#14171a;--fg:#eceff2;--mut:#9aa4ae;--line:#2b3138;--acc:#3fbf8f;--acc2:#1b2622;--warn:#ff9a6b}
+.card,input,select{background:#1a1e22}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tính hoa hồng nhân viên theo doanh thu — Bảng tính cho quán nhỏ">
+<meta property="og:description" content="Tính tiền hoa hồng theo tỷ lệ doanh thu và so với lương cứng, xem cách trả lương nào hợp hơn với quán. Không đăng ký, không lưu dữ liệu.">
+<meta property="og:image" content="https://www.biz-vn.com/images/og/tai-lieu.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://bang-tinh-quan-nho.pages.dev/hoa-hong">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bảng tính cho quán nhỏ">
+<meta name="twitter:image:alt" content="Bảng tính cho quán nhỏ">
+</head>
+<body>
+<div class="wrap">
+<nav><a href="./">Trang chủ</a> <a href="https://www.biz-vn.com/tai-lieu/">Tài liệu miễn phí cho chủ quán</a></nav>
+
+<h1>Tính hoa hồng nhân viên theo doanh thu</h1>
+<p class="lead">Nhập doanh thu một người bán được trong tháng và tỷ lệ hoa hồng, xem số tiền là bao nhiêu. Nhập thêm mức lương cứng để so hai cách trả lương với nhau. Không đăng ký, không lưu dữ liệu lên máy chủ.</p>
+
+<div class="card">
+  <label for="doanhThu">Doanh thu người đó bán được trong tháng (đ) <span class="hint">tiền bán ra của riêng người đó, không tính cả quán</span></label>
+  <input id="doanhThu" type="text" inputmode="decimal" placeholder="40000000">
+
+  <div class="row">
+    <div>
+      <label for="tyLe">Tỷ lệ hoa hồng (%)</label>
+      <input id="tyLe" type="text" inputmode="decimal" placeholder="3">
+    </div>
+    <div>
+      <label for="luongCu">Lương cứng mỗi tháng (đ) <span class="hint">phần cứng, nhập 0 nếu không có</span></label>
+      <input id="luongCu" type="text" inputmode="decimal" placeholder="3000000">
+    </div>
+  </div>
+
+  <p style="margin-top:16px"><button type="button" id="tinh">Tính</button> <button type="button" class="ghost" id="xoa">Xoá số</button></p>
+  <p class="note">Nhập 3 nghĩa là 3 phần trăm doanh thu. Muốn so hai kiểu trả lương thì nhập thêm lương cứng, bảng tính sẽ ra tỷ lệ hoa hồng tương đương với mức lương cứng đó.</p>
+</div>
+
+<div id="ketQua" hidden>
+  <div class="out">
+    <div class="kv"><span>Hoa hồng trong tháng</span><b class="big" id="oHoaHong">—</b></div>
+    <div class="kv"><span>Tổng thu nhập nếu có cả phần lương cứng</span><b id="oTongThuNhap">—</b></div>
+    <div class="kv" style="margin-top:10px"><span>Tỷ lệ hoa hồng tương đương lương cứng</span><b id="oTyLeTuongDuong">—</b></div>
+    <div class="kv"><span>Chênh lệch với tỷ lệ đang trả</span><b id="oChenhLech">—</b></div>
+  </div>
+  <p class="note" id="oLuuY"></p>
+</div>
+
+<h2>Đọc kết quả thế nào</h2>
+<p>Hoa hồng theo doanh thu thì người bán được nhiều thì nhận nhiều, quán không
+phải trả tiền khi tháng đó hàng không bán được. Nhưng khi món bán chậm,
+dễ xảy ra chuyện bán thêm cho người quen mà bè thì ít sinh lời hơn khách lạ.</p>
+<p>Lương cứng thì ổn định, người làm việc không phải nghĩ xem tháng này bán
+đủ không, nhưng quán vẫn phải trả đều dù hàng bán chạy hay chậm. Tỷ lệ hoa
+hồng tương đương lương cứng là câu hỏi ngược lại: nếu trả lương cứng như vậy
+thì cần tỷ lệ hoa hồng bao nhiêu phần trăm mới ngang.</p>
+<p>So hai con số rồi chọn cái nào quán theo dõi dễ hơn. Quán bán món nhanh,
+đồng nghĩa với người bán, thì hoa hồng hợp hơn. Quán bán theo ca và món chậm
+thì lương cứng dễ quản hơn.</p>
+<p class="note">Đừng quên chia tổng chi phí nhân sự cho số người bán hàng rồi
+mới tính vào giá bán, nếu không giá của món sẽ bị đẩy lên mà không ai thấy
+chỗ đẩy lên từ đâu.</p>
+
+<h2>Bài hướng dẫn đi kèm</h2>
+<ul>
+  <li><a href="https://www.biz-vn.com/blog/chung/cham-cong-nhan-vien/">Chấm công nhân viên bằng cách nào cho công bằng?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/chung/quan-so-nhan-vien-vua-du/">Một cửa hàng cần bao nhiêu nhân viên là vừa đủ?</a></li>
+  <li><a href="https://www.biz-vn.com/blog/cua-hang/xep-lich-lam-viec-nhan-vien-cua-hang/">Xếp lịch nhân viên cửa hàng không thiếu người giờ đông?</a></li>
+</ul>
+
+<p><a href="cham-cong.html">Chấm giờ ca →</a> · <a href="./">Trang chủ</a></p>
+</div>
+
+<script src="calc.js"></script>
+<script>
+var T = TinhSao;
+function money(n){return T.money(n)}
+function pct(n){return T.pct(n)}
+function pp(n){return (n>0?'+':'')+n.toLocaleString('vi-VN',{maximumFractionDigits:1})+' điểm phần trăm'}
+
+document.getElementById('tinh').addEventListener('click',function(){
+  var r = T.hoaHong({
+    doanhThu: document.getElementById('doanhThu').value,
+    tyLe: document.getElementById('tyLe').value,
+    luongCu: document.getElementById('luongCu').value
+  });
+  var kq=document.getElementById('ketQua');
+  var set=function(id,v,cls){var e=document.getElementById(id);e.textContent=v;if(cls!==undefined)e.className=cls;};
+  if(!r){
+    kq.hidden=false;
+    set('oHoaHong','—','big');set('oTongThuNhap','—');set('oTyLeTuongDuong','—');set('oChenhLech','—');
+    document.getElementById('oLuuY').innerHTML='<b class="bad">Còn thiếu số.</b> Cần ít nhất doanh thu trong tháng của người đó.';
+    return;
+  }
+
+  set('oHoaHong',money(r.tien),'big '+(r.tien>0?'good':'bad'));
+  set('oTongThuNhap',money(r.tongThuNhap));
+  if(r.tyLeTuongDuong===null){
+    set('oTyLeTuongDuong','chưa nhập lương cứng');
+    set('oChenhLech','chưa nhập lương cứng');
+  }else{
+    set('oTyLeTuongDuong',pct(r.tyLeTuongDuong));
+    set('oChenhLech',pp(r.chenhLech),r.chenhLech>0?'bad':'good');
+  }
+
+  var luy;
+  if(r.tyLeTuongDuong===null){
+    luy='Bạn chưa nhập mức lương cứng nên chưa so được hai kiểu trả lương. Nhập thêm lương cứng mỗi tháng, bảng tính sẽ ra tỷ lệ hoa hồng tương đương với mức đó.';
+  }else if(Math.abs(r.chenhLech)<0.05){
+    luy='Hai kiểu đang bằng nhau ở mức doanh thu này: lương cứng '+money(r.luongCu)+' tương đương hoa hồng '+pct(r.tyLeTuongDuong)+'. Chọn cái nào theo dõi dễ hơn thì giữ cái đó.';
+  }else if(r.chenhLech>0){
+    luy='Lương cứng '+money(r.luongCu)+' tương đương hoa hồng '+pct(r.tyLeTuongDuong)+', cao hơn mức '+pct(r.tyLe)+' đang trả '+pp(r.chenhLech)+'. Nghĩa là tháng nào người đó bán ít đi thì thu nhập thấp hơn mức lương cứng. Muốn đều đặn thì nâng tỷ lệ hoa hồng lên, hoặc thêm một phần lương cứng nhỏ.';
+  }else{
+    luy='Mức hoa hồng '+pct(r.tyLe)+' đang trả cao hơn mức tương đương lương cứng '+pp(-r.chenhLech)+'. Người bán được nhiều thì thu nhập tốt hơn hẳn, nhưng lương cứng riêng thì không đủ sống cho người bán ít. Nếu muốn giữ cả hai thì xem lại tỷ lệ.';
+  }
+  document.getElementById('oLuuY').innerHTML=luy;
+  kq.hidden=false;
+});
+
+document.getElementById('xoa').addEventListener('click',function(){
+  ['doanhThu','tyLe','luongCu'].forEach(function(id){document.getElementById(id).value=''});
+  document.getElementById('ketQua').hidden=true;
+});
+</script>
+</body>
+</html>
